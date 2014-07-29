@@ -30,7 +30,6 @@ public abstract class CrawlerBase {
     protected abstract CrawlerData retrieveDataSmart(String query);
     protected abstract CrawlerData retrieveDataBruteForce(String query);
     protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
-
-    protected abstract boolean checkIfTargetPage();
+    protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
 }

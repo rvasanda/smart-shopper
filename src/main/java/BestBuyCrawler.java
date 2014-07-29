@@ -1,4 +1,5 @@
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -17,6 +18,13 @@ public class BestBuyCrawler extends CrawlerBase {
         super(BESTBUY_URL);
     }
 
+    /**
+     * Key here is to find the search box input and the search button/img/url/input. If we can identify a parent container in the dom which contains these 2
+     * things then we can be 99% sure that this is the search field we want. Next is to submit a query through this input field. this will make search 10x faster
+     *
+     * @param query
+     * @return
+     */
     @Override
     protected CrawlerData retrieveDataSmart(String query) {
         Elements searchElements = pageDoc.getElementsMatchingText("Search");
@@ -38,9 +46,16 @@ public class BestBuyCrawler extends CrawlerBase {
             try {
                 pageDoc = Jsoup.connect(linksQueue.remove()).get();
 
+
+
                 Elements allLinks = pageDoc.select("a[href]");
                 for (Element link : allLinks) {
-                    linksQueue.add(link.baseUri() + link.attr("href"));
+                    StringBuilder linkBuilder = new StringBuilder(BESTBUY_URL);
+                    linkBuilder.append(link.attr("href"));
+                    String linkString = linkBuilder.toString();
+                    if (!linksQueue.contains(linkString)) {
+                        linksQueue.add(linkString);
+                    }
                 }
                 System.out.println("done");
             } catch(IOException e) {
@@ -58,5 +73,22 @@ public class BestBuyCrawler extends CrawlerBase {
     @Override
     protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
         return null;
+    }
+
+    @Override
+    protected boolean checkIfTargetPage(Document pageDoc, String query) {
+        boolean isTargetPage = false;
+
+        if (pageDoc == null) {
+            return isTargetPage;
+        }
+
+        if (pageDoc.hasClass("product-title")) {
+            if (pageDoc.select(".product-title").text().contains(query)) {
+                isTargetPage = true;
+            }
+        }
+
+        return isTargetPage;
     }
 }
