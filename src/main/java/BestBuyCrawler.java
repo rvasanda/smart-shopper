@@ -44,9 +44,7 @@ public class BestBuyCrawler extends CrawlerBase {
         linksQueue.add(BESTBUY_URL);
         while (!linksQueue.isEmpty()) {
             try {
-                pageDoc = Jsoup.connect(linksQueue.remove()).get();
-
-
+                pageDoc = Jsoup.connect(linksQueue.remove()).timeout(10000).get();
 
                 Elements allLinks = pageDoc.select("a[href]");
                 for (Element link : allLinks) {
@@ -59,10 +57,10 @@ public class BestBuyCrawler extends CrawlerBase {
                 }
                 System.out.println("done");
             } catch(IOException e) {
-                System.err.println("Could not connect due to IOException" + e.getMessage());
+                System.err.println("Could not connect due to IOException: " + e.getMessage());
                 continue;
             } catch (Exception e) {
-                System.err.println("Could not connect due to Exception" + e.getMessage());
+                System.err.println("Could not connect due to Exception: " + e.getMessage());
                 continue;
             }
         }
@@ -83,12 +81,13 @@ public class BestBuyCrawler extends CrawlerBase {
             return isTargetPage;
         }
 
-        if (pageDoc.hasClass("product-title")) {
-            if (pageDoc.select(".product-title").text().contains(query)) {
-                isTargetPage = true;
-            }
+        Element potentialProductMatch = pageDoc.getElementsByClass("product-title").get(0);
+        if (potentialProductMatch.text().contains(query)) {
+            //TODO: check if price is in desired range
+            //TODO: send mail if price in desired range
         }
 
         return isTargetPage;
     }
+
 }
