@@ -1,6 +1,5 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
@@ -9,23 +8,25 @@ import java.io.IOException;
  */
 public abstract class CrawlerBase {
 
-    protected boolean connect(String url) {
-        boolean isConnected = false;
-        try {
-            Document doc = Jsoup.connect("http://www.virtualtourist.com/search/location/?keyword=brazil").get();
-            Elements searchResults = doc.select("#locFound").select("a[href]");
-            //Element mainContent = doc.getElementById("mainContent");
-            //Elements newsHeadlines = doc.select("#mp-itn b a");
-        } catch(IOException e) {
-            System.err.println("Some sort of IOException" + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Some sort of Exception" + e.getMessage());
-        }
+    protected Document pageDoc = null;
 
-
-        return isConnected;
+    public CrawlerBase(String url) {
+        connect(url);
     }
 
-    protected abstract CrawlerProperties retrieveProperties();
+    protected boolean connect(String url) {
+        try {
+            pageDoc = Jsoup.connect(url).get();
+        } catch(IOException e) {
+            System.err.println("Could not connect due to IOException" + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.err.println("Could not connect due to Exception" + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    protected abstract CrawlerProperties retrieveData(String query);
 
 }
