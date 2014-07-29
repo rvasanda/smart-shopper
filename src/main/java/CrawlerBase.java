@@ -14,7 +14,7 @@ public abstract class CrawlerBase {
         connect(url);
     }
 
-    protected boolean connect(String url) {
+    private boolean connect(String url) {
         try {
             pageDoc = Jsoup.connect(url).get();
         } catch(IOException e) {
@@ -27,6 +27,10 @@ public abstract class CrawlerBase {
         return true;
     }
 
-    protected abstract CrawlerProperties retrieveData(String query);
+    protected abstract CrawlerData retrieveDataSmart(String query);
+    protected abstract CrawlerData retrieveDataBruteForce(String query);
+    protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
+
+    protected abstract boolean checkIfTargetPage();
 
 }

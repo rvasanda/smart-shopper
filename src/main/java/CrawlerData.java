@@ -1,7 +1,7 @@
 /**
  * Created by Rohit on 2014-07-28.
  */
-public class CrawlerProperties {
+public class CrawlerData {
 
     private String somedata;
 
