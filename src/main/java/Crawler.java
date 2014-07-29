@@ -1,7 +1,10 @@
+import mail.GoogleMail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import java.io.IOException;
 
 /**
@@ -12,7 +15,8 @@ public class Crawler {
     public static void main(String[] args) {
         CrawlerBase bestBuy = new BestBuyCrawler();
         //bestBuy.retrieveDataBruteForce("un55h7150afxzc");
-        testBruteForce();
+        //testBruteForce();
+        testMail();
     }
 
     private static void testBruteForce() {
@@ -28,6 +32,17 @@ public class Crawler {
             System.err.println("Could not connect due to IOException" + e.getMessage());
         } catch (Exception e) {
             System.err.println("Could not connect due to Exception" + e.getMessage());
+        }
+
+    }
+
+    private static void testMail() {
+        try {
+            GoogleMail.Send("pieman0112", "tennispro", "rvasanda12@gmail.com", "sometitle", "somemessage");
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
 
     }
