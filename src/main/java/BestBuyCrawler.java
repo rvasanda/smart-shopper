@@ -81,13 +81,12 @@ public class BestBuyCrawler extends CrawlerBase {
             return isTargetPage;
         }
 
-        Element potentialProductMatch = pageDoc.getElementsByClass("product-title").get(0);
-        if (potentialProductMatch.text().contains(query)) {
+        Element potentialProductMatch = pageDoc.getElementsByClass("product-title") != null ? pageDoc.getElementsByClass("product-title").get(0) : null;
+        if (potentialProductMatch!= null && potentialProductMatch.text().contains(query)) {
             //TODO: check if price is in desired range
             //TODO: send mail if price in desired range
         }
 
         return isTargetPage;
     }
-
 }

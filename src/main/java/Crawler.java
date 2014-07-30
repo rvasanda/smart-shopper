@@ -14,9 +14,9 @@ public class Crawler {
 
     public static void main(String[] args) {
         CrawlerBase bestBuy = new BestBuyCrawler();
-        //bestBuy.retrieveDataBruteForce("un55h7150afxzc");
+        bestBuy.retrieveDataBruteForce("un55h7150afxzc");
         //testBruteForce();
-        testMail();
+        //testMail();
     }
 
     private static void testBruteForce() {
