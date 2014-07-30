@@ -3,6 +3,6 @@
  */
 public class CrawlerData {
 
-    private String somedata;
+    public String somedata;
 
 }

@@ -1,8 +1,11 @@
+import mail.GoogleMail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -40,22 +43,27 @@ public class BestBuyCrawler extends CrawlerBase {
 
     @Override
     protected CrawlerData retrieveDataBruteForce(String query) {
-        Queue<String> linksQueue = new LinkedList();
+        Queue<String> linksQueue = new LinkedList<String>();
         linksQueue.add(BESTBUY_URL);
         while (!linksQueue.isEmpty()) {
             try {
-                pageDoc = Jsoup.connect(linksQueue.remove()).timeout(10000).get();
+                Document pageDoc = Jsoup.connect(linksQueue.remove()).timeout(30000).get();
 
                 Elements allLinks = pageDoc.select("a[href]");
                 for (Element link : allLinks) {
                     StringBuilder linkBuilder = new StringBuilder(BESTBUY_URL);
                     linkBuilder.append(link.attr("href"));
                     String linkString = linkBuilder.toString();
-                    if (!linksQueue.contains(linkString)) {
+                    if (!linksQueue.contains(linkString) && linkString.contains(BESTBUY_URL)) {
                         linksQueue.add(linkString);
+                        if (checkIfTargetPage(pageDoc,query)) {
+                            CrawlerData cd = new CrawlerData();
+                            cd.somedata = "Found";
+                        }
+                        pageDoc = Jsoup.connect(linksQueue.remove()).timeout(30000).get();
                     }
                 }
-                System.out.println("done");
+                System.out.println("Queue Size: " + linksQueue.size());
             } catch(IOException e) {
                 System.err.println("Could not connect due to IOException: " + e.getMessage());
                 continue;
@@ -81,10 +89,17 @@ public class BestBuyCrawler extends CrawlerBase {
             return isTargetPage;
         }
 
-        Element potentialProductMatch = pageDoc.getElementsByClass("product-title") != null ? pageDoc.getElementsByClass("product-title").get(0) : null;
+        Element potentialProductMatch = pageDoc.getElementsByClass("product-title").size() > 0 ? pageDoc.getElementsByClass("product-title").get(0) : null;
         if (potentialProductMatch!= null && potentialProductMatch.text().contains(query)) {
             //TODO: check if price is in desired range
             //TODO: send mail if price in desired range
+            try {
+                GoogleMail.Send("pieman0112", "tennispro", "rvasanda12@gmail.com", "sometitle", "somemessage");
+            } catch (AddressException e) {
+                e.printStackTrace();
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
         }
 
         return isTargetPage;

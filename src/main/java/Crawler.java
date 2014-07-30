@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Rohit on 2014-07-28.
@@ -14,7 +15,13 @@ public class Crawler {
 
     public static void main(String[] args) {
         CrawlerBase bestBuy = new BestBuyCrawler();
-        bestBuy.retrieveDataBruteForce("un55h7150afxzc");
+        long startTime = System.currentTimeMillis();
+        CrawlerData data = bestBuy.retrieveDataBruteForce("un55h7150afxzc");
+        long endTime = System.currentTimeMillis();
+
+        String totalExecutionTime = TimeUnit.MILLISECONDS.toMinutes(endTime-startTime) + " minutes";
+        System.out.println(totalExecutionTime);
+        System.out.println(data.somedata);
         //testBruteForce();
         //testMail();
     }
