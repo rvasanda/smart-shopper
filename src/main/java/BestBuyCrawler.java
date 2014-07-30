@@ -42,41 +42,6 @@ public class BestBuyCrawler extends CrawlerBase {
     }
 
     @Override
-    protected CrawlerData retrieveDataBruteForce(String query) {
-        Queue<String> linksQueue = new LinkedList<String>();
-        linksQueue.add(BESTBUY_URL);
-        while (!linksQueue.isEmpty()) {
-            try {
-                Document pageDoc = Jsoup.connect(linksQueue.remove()).timeout(30000).get();
-
-                Elements allLinks = pageDoc.select("a[href]");
-                for (Element link : allLinks) {
-                    StringBuilder linkBuilder = new StringBuilder(BESTBUY_URL);
-                    linkBuilder.append(link.attr("href"));
-                    String linkString = linkBuilder.toString();
-                    if (!linksQueue.contains(linkString) && linkString.contains(BESTBUY_URL)) {
-                        linksQueue.add(linkString);
-                        if (checkIfTargetPage(pageDoc,query)) {
-                            CrawlerData cd = new CrawlerData();
-                            cd.somedata = "Found";
-                            return cd;
-                        }
-                    }
-                }
-                System.out.println("Queue Size: " + linksQueue.size());
-            } catch(IOException e) {
-                System.err.println("Could not connect due to IOException: " + e.getMessage());
-                continue;
-            } catch (Exception e) {
-                System.err.println("Could not connect due to Exception: " + e.getMessage());
-                continue;
-            }
-        }
-
-        return null;
-    }
-
-    @Override
     protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
         return null;
     }
