@@ -59,8 +59,8 @@ public class BestBuyCrawler extends CrawlerBase {
                         if (checkIfTargetPage(pageDoc,query)) {
                             CrawlerData cd = new CrawlerData();
                             cd.somedata = "Found";
+                            return cd;
                         }
-                        pageDoc = Jsoup.connect(linksQueue.remove()).timeout(30000).get();
                     }
                 }
                 System.out.println("Queue Size: " + linksQueue.size());

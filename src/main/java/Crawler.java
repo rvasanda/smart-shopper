@@ -21,7 +21,11 @@ public class Crawler {
 
         String totalExecutionTime = TimeUnit.MILLISECONDS.toMinutes(endTime-startTime) + " minutes";
         System.out.println(totalExecutionTime);
-        System.out.println(data.somedata);
+        if (data != null) {
+            System.out.println(data.somedata);
+        } else {
+            System.out.println("FAILED");
+        }
         //testBruteForce();
         //testMail();
     }
