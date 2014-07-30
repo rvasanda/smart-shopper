@@ -9,4 +9,4 @@ Things to be done:
   - Have the ability to search for multiple products
   - Ability to configure price ranges for multiple products. Each product has a price range object.
   - Make CrawlerBase more generic and include more common functionality
-  - 
+  - Ability to send emails based on whether the product price falls within the price range
