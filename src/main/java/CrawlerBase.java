@@ -55,10 +55,10 @@ public abstract class CrawlerBase {
                 }
                 System.out.println("Queue Size: " + linksQueue.size());
             } catch(IOException e) {
-                System.err.println("Could not connect due to IOException: " + e.getMessage());
+                System.err.println("Could not retrieve data due to IOException: " + e.getMessage());
                 continue;
             } catch (Exception e) {
-                System.err.println("Could not connect due to Exception: " + e.getMessage());
+                System.err.println("Could not retrieve due to Exception: " + e.getMessage());
                 continue;
             }
         }
