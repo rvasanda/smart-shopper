@@ -1,3 +1,4 @@
+import com.sun.corba.se.impl.orb.ORBConfiguratorImpl;
 import mail.GoogleMail;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,9 +13,11 @@ import javax.mail.internet.AddressException;
 public class BestBuyCrawler extends Crawler {
 
     private static final String BESTBUY_URL = "http://www.bestbuy.ca";
+    private static final String PROPERTIES_FILE = "BestBuy.properties";
 
     public BestBuyCrawler() {
-        super(BESTBUY_URL);
+        super(BESTBUY_URL, PROPERTIES_FILE);
+
     }
 
     /**

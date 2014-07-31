@@ -6,6 +6,8 @@ import org.jsoup.nodes.Element;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -55,7 +57,5 @@ public class CrawlerMain {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
     }
-
 }

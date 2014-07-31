@@ -4,7 +4,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
+import java.util.Properties;
 import java.util.Queue;
 
 /**
@@ -15,8 +17,9 @@ public abstract class Crawler {
     protected Document pageDoc = null;
     private String baseUrl = null;
     private String starterUrl = null;
+    protected Properties properties = null;
 
-    public Crawler(String url) {
+    public Crawler(String url, String filePath) {
 //        try {
 //            this.baseUrl = Utility.getDomainName(url);
 //        } catch(URISyntaxException e) {
@@ -24,6 +27,8 @@ public abstract class Crawler {
 //        }
         this.baseUrl = url;
         connect(baseUrl);
+        readConfigFile(filePath);
+
     }
 
     private boolean connect(String url) {
@@ -82,6 +87,18 @@ public abstract class Crawler {
 
     protected void setStarterUrl(String starterUrl) {
         this.starterUrl = starterUrl;
+    }
+
+    protected void readConfigFile(String filePath) {
+        try {
+            Properties prop = new Properties();
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            InputStream stream = loader.getResourceAsStream(filePath);
+            prop.load(stream);
+        } catch (IOException e) {
+            System.err.println("Could not read properties file successfully");
+            e.printStackTrace();
+        }
     }
 
 }
