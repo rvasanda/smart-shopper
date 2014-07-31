@@ -1,61 +1,87 @@
-import mail.GoogleMail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by Rohit on 2014-07-28.
  */
-public class Crawler {
+public abstract class Crawler {
 
-    public static void main(String[] args) {
-        CrawlerBase bestBuy = new BestBuyCrawler();
-        bestBuy.setStarterUrl("http://www.bestbuy.ca/en-CA/category/led-tvs/29549.aspx?type=product&filter=category%253aTV%2B%2526%2BHome%2BTheatre%253bcategory%253aTelevisions%253bcategory%253aLED%2BTVs%253bbrandName%253aSAMSUNG");
-        long startTime = System.currentTimeMillis();
-        CrawlerData data = bestBuy.retrieveDataBruteForce("un55h7150afxzc");
-        long endTime = System.currentTimeMillis();
+    protected Document pageDoc = null;
+    private String baseUrl = null;
+    private String starterUrl = null;
 
-        String totalExecutionTime = TimeUnit.MILLISECONDS.toMinutes(endTime-startTime) + " minutes";
-        System.out.println(totalExecutionTime);
-        if (data != null) {
-            System.out.println(data.somedata);
-        } else {
-            System.out.println("FAILED");
-        }
-        //testBruteForce();
-        //testMail();
+    public Crawler(String url) {
+//        try {
+//            this.baseUrl = Utility.getDomainName(url);
+//        } catch(URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+        this.baseUrl = url;
+        connect(baseUrl);
     }
 
-    private static void testBruteForce() {
-        Document pageDoc = null;
+    private boolean connect(String url) {
         try {
-            pageDoc = Jsoup.connect("http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx?").timeout(10000).get();
-            Element potentialProductMatch = pageDoc.getElementsByClass("product-title").get(0);
-
-            if (potentialProductMatch.text().contains("queryString")) {
-                System.out.println("yaay");
-            }
+            pageDoc = Jsoup.connect(url).get();
         } catch(IOException e) {
             System.err.println("Could not connect due to IOException" + e.getMessage());
+            return false;
         } catch (Exception e) {
             System.err.println("Could not connect due to Exception" + e.getMessage());
+            return false;
         }
+        return true;
     }
 
-    private static void testMail() {
-        try {
-            GoogleMail.Send("pieman0112", "tennispro", "rvasanda12@gmail.com", "sometitle", "somemessage");
-        } catch (AddressException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+    protected CrawlerData retrieveDataBruteForce(String query) {
+        Queue<String> linksQueue = new LinkedList<String>();
 
+        if (starterUrl != null) {
+            linksQueue.add(starterUrl);
+        } else {
+            linksQueue.add(baseUrl);
+        }
+        while (!linksQueue.isEmpty()) {
+            try {
+                Document pageDoc = Jsoup.connect(linksQueue.remove()).timeout(30000).get();
+
+                Elements allLinks = pageDoc.select("a[href]");
+                for (Element link : allLinks) {
+                    StringBuilder linkBuilder = new StringBuilder(baseUrl);
+                    linkBuilder.append(link.attr("href"));
+                    String linkString = linkBuilder.toString();
+                    if (!linksQueue.contains(linkString) && linkString.contains(baseUrl)) {
+                        linksQueue.add(linkString);
+                        if (checkIfTargetPage(pageDoc,query)) {
+                            CrawlerData cd = new CrawlerData();
+                            cd.somedata = "Found";
+                            return cd;
+                        }
+                    }
+                }
+                System.out.println("Queue Size: " + linksQueue.size());
+            } catch(IOException e) {
+                System.err.println("Could not retrieve data due to IOException: " + e.getMessage());
+                continue;
+            } catch (Exception e) {
+                System.err.println("Could not retrieve due to Exception: " + e.getMessage());
+                continue;
+            }
+        }
+        return null;
+    }
+    protected abstract CrawlerData retrieveDataSmart(String query);
+    protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
+    protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
+
+    protected void setStarterUrl(String starterUrl) {
+        this.starterUrl = starterUrl;
     }
 
 }

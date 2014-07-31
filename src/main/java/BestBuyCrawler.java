@@ -1,19 +1,15 @@
 import mail.GoogleMail;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Created by Rohit on 2014-07-28.
  */
-public class BestBuyCrawler extends CrawlerBase {
+public class BestBuyCrawler extends Crawler {
 
     private static final String BESTBUY_URL = "http://www.bestbuy.ca";
 
