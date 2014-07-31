@@ -15,6 +15,7 @@ public class Crawler {
 
     public static void main(String[] args) {
         CrawlerBase bestBuy = new BestBuyCrawler();
+        bestBuy.setStarterUrl("http://www.bestbuy.ca/en-CA/category/led-tvs/29549.aspx?type=product&filter=category%253aTV%2B%2526%2BHome%2BTheatre%253bcategory%253aTelevisions%253bcategory%253aLED%2BTVs%253bbrandName%253aSAMSUNG");
         long startTime = System.currentTimeMillis();
         CrawlerData data = bestBuy.retrieveDataBruteForce("un55h7150afxzc");
         long endTime = System.currentTimeMillis();
@@ -44,7 +45,6 @@ public class Crawler {
         } catch (Exception e) {
             System.err.println("Could not connect due to Exception" + e.getMessage());
         }
-
     }
 
     private static void testMail() {

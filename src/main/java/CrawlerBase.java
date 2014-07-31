@@ -13,10 +13,17 @@ import java.util.Queue;
 public abstract class CrawlerBase {
 
     protected Document pageDoc = null;
-    private String url = null;
+    private String baseUrl = null;
+    private String starterUrl = null;
+
     public CrawlerBase(String url) {
-        this.url = url;
-        connect(url);
+//        try {
+//            this.baseUrl = Utility.getDomainName(url);
+//        } catch(URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+        this.baseUrl = url;
+        connect(baseUrl);
     }
 
     private boolean connect(String url) {
@@ -34,17 +41,22 @@ public abstract class CrawlerBase {
 
     protected CrawlerData retrieveDataBruteForce(String query) {
         Queue<String> linksQueue = new LinkedList<String>();
-        linksQueue.add(url);
+
+        if (starterUrl != null) {
+            linksQueue.add(starterUrl);
+        } else {
+            linksQueue.add(baseUrl);
+        }
         while (!linksQueue.isEmpty()) {
             try {
                 Document pageDoc = Jsoup.connect(linksQueue.remove()).timeout(30000).get();
 
                 Elements allLinks = pageDoc.select("a[href]");
                 for (Element link : allLinks) {
-                    StringBuilder linkBuilder = new StringBuilder(url);
+                    StringBuilder linkBuilder = new StringBuilder(baseUrl);
                     linkBuilder.append(link.attr("href"));
                     String linkString = linkBuilder.toString();
-                    if (!linksQueue.contains(linkString) && linkString.contains(url)) {
+                    if (!linksQueue.contains(linkString) && linkString.contains(baseUrl)) {
                         linksQueue.add(linkString);
                         if (checkIfTargetPage(pageDoc,query)) {
                             CrawlerData cd = new CrawlerData();
@@ -67,5 +79,9 @@ public abstract class CrawlerBase {
     protected abstract CrawlerData retrieveDataSmart(String query);
     protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
+
+    protected void setStarterUrl(String starterUrl) {
+        this.starterUrl = starterUrl;
+    }
 
 }
