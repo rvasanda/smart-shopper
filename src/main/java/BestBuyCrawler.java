@@ -13,7 +13,7 @@ import javax.mail.internet.AddressException;
 public class BestBuyCrawler extends Crawler {
 
     private static final String BESTBUY_URL = "http://www.bestbuy.ca";
-    private static final String PROPERTIES_FILE = "BestBuy.properties";
+    private static final String PROPERTIES_FILE = "/config/bestbuy/BestBuy.properties";
 
     public BestBuyCrawler() {
         super(BESTBUY_URL, PROPERTIES_FILE);
