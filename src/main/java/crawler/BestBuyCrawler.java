@@ -14,23 +14,6 @@ public class BestBuyCrawler extends Crawler {
         super(CONFIG_FILE);
     }
 
-    /**
-     * Key here is to find the search box input and the search button/img/url/input. If we can identify a parent container in the dom which contains these 2
-     * things then we can be 99% sure that this is the search field we want. Next step is to submit a query through this input field.
-     *
-     * @param query
-     * @return
-     */
-    @Override
-    protected CrawlerData retrieveDataSmart(String query) {
-        throw new UnsupportedOperationException("Smart retrieval of data not implemented yet");
-    }
-
-    @Override
-    protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
-        throw new UnsupportedOperationException("Search retrieval of data not implemented yet");
-    }
-
     @Override
     protected boolean checkIfTargetPage(Document pageDoc, String query) {
         boolean isTargetPage = false;

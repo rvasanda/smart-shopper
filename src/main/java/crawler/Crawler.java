@@ -24,8 +24,13 @@ public abstract class Crawler {
     protected Map<String, Object> configProperties= null;
     protected List<TrackedProduct> trackedProducts = new ArrayList<TrackedProduct>();
 
-    protected abstract CrawlerData retrieveDataSmart(String query);
-    protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
+    protected CrawlerData retrieveDataSmart(String query) {
+        throw new UnsupportedOperationException("Smart retrieval of data not implemented yet");
+    }
+
+    protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
+        throw new UnsupportedOperationException("Search retrieval of data not implemented yet");
+    }
 
     public Crawler(String filePath) {
         configProperties = ConfigurationReader.readXMLConfigFile(filePath);
