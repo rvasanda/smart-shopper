@@ -2,6 +2,7 @@ package config; /**
  * Created by Rohit on 2014-08-01.
  */
 
+import crawler.TrackedProduct;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -61,9 +62,18 @@ public class ConfigurationReader {
             expression = "Configuration/TrackedProducts/Product";
             nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
 
+            String childExpression = "*";
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                xmlProperties.put(node.getNodeName(), node.getTextContent());
+                TrackedProduct product = new TrackedProduct();
+                NodeList productDetails = (NodeList) xPath.compile(childExpression).evaluate(node, XPathConstants.NODESET);
+
+                for (int j = 0; j < productDetails.getLength(); ++j) {
+                    Node detailsNode = productDetails.item(j);
+                    product.details.put(detailsNode.getNodeName(), detailsNode.getTextContent());
+                }
+
+                xmlProperties.put(product.details.get("Name"), product);
             }
 
 
@@ -80,8 +90,6 @@ public class ConfigurationReader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return xmlProperties;
     }
 
