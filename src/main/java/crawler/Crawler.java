@@ -8,9 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by Rohit on 2014-07-28.
@@ -20,12 +18,16 @@ public abstract class Crawler {
     protected Document pageDoc = null;
     private String baseUrl = null;
     private String starterUrl = null;
-    private Map<String, Object> configProperties= null;
+    protected Map<String, Object> configProperties= null;
+    protected List<TrackedProduct> trackedProducts = new ArrayList<TrackedProduct>();
 
     public Crawler(String filePath) {
         configProperties = ConfigurationReader.readXMLConfigFile(filePath);
         baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
-        connect(baseUrl);
+        constructProductList();
+        if (connect(baseUrl) == false) {
+            System.exit(0);
+        }
     }
 
     private boolean connect(String url) {
@@ -86,5 +88,17 @@ public abstract class Crawler {
 
     protected void setStarterUrl(String starterUrl) {
         this.starterUrl = starterUrl;
+    }
+
+    private void constructProductList() {
+        Iterator iterator = configProperties.values().iterator();
+
+        while (iterator.hasNext()) {
+            Object value = iterator.next();
+
+            if (value instanceof TrackedProduct) {
+                trackedProducts.add((TrackedProduct) value);
+            }
+        }
     }
 }
