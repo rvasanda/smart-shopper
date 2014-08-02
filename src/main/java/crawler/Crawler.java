@@ -75,7 +75,7 @@ public abstract class Crawler {
                 System.err.println("Could not retrieve data due to IOException: " + e.getMessage());
                 continue;
             } catch (Exception e) {
-                System.err.println("Could not retrieve due to Exception: " + e.getMessage());
+                System.err.println("Could not retrieve data due to Exception: " + e.getMessage());
                 continue;
             }
         }

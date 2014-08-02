@@ -120,7 +120,7 @@ public class ConfigurationReader {
         InputStream stream = null;
         Properties properties = null;
         try {
-            stream = Utility.class.getClass().getResourceAsStream(filePath);
+            stream = ConfigurationReader.class.getClass().getResourceAsStream(filePath);
             properties = new Properties();
             properties.load(stream);
         } catch (IOException e) {
@@ -137,6 +137,4 @@ public class ConfigurationReader {
         }
         return properties;
     }
-
-    public static
 }

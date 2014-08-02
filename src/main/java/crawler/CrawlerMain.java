@@ -17,8 +17,8 @@ public class CrawlerMain {
 
     public static void main(String[] args) {
         Crawler bestBuy = new BestBuyCrawler();
-        //bestBuy.setStarterUrl("http://www.bestbuy.ca/en-CA/category/led-tvs/29549.aspx?type=product&filter=category%253aTV%2B%2526%2BHome%2BTheatre%253bcategory%253aTelevisions%253bcategory%253aLED%2BTVs%253bbrandName%253aSAMSUNG");
-        bestBuy.setStarterUrl("http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx?");
+        bestBuy.setStarterUrl("http://www.bestbuy.ca/en-CA/category/led-tvs/29549.aspx?type=product&filter=category%253aTV%2B%2526%2BHome%2BTheatre%253bcategory%253aTelevisions%253bcategory%253aLED%2BTVs%253bbrandName%253aSAMSUNG");
+        //bestBuy.setStarterUrl("http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx?");
         long startTime = System.currentTimeMillis();
         CrawlerData data = bestBuy.retrieveDataBruteForce("un55h7150afxzc");
         long endTime = System.currentTimeMillis();
@@ -34,29 +34,5 @@ public class CrawlerMain {
         //testMail();
     }
 
-    private static void testBruteForce() {
-        Document pageDoc = null;
-        try {
-            pageDoc = Jsoup.connect("http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx?").timeout(10000).get();
-            Element potentialProductMatch = pageDoc.getElementsByClass("product-title").get(0);
 
-            if (potentialProductMatch.text().contains("queryString")) {
-                System.out.println("yaay");
-            }
-        } catch(IOException e) {
-            System.err.println("Could not connect due to IOException" + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Could not connect due to Exception" + e.getMessage());
-        }
-    }
-
-    private static void testMail() {
-        try {
-            GoogleMail.Send("pieman0112", "tennispro", "rvasanda12@gmail.com", "sometitle", "somemessage");
-        } catch (AddressException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
 }
