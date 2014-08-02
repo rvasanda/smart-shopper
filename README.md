@@ -8,3 +8,4 @@ Things to be done:
   - Have the ability to search for multiple products
   - Make CrawlerBase more generic and include more common functionality
   - Ability to send emails based on whether the product price falls within the price range
+  - Log errors to a file to track everything
