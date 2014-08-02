@@ -14,6 +14,10 @@ public class ConfigConstants {
     public static final String PRODUCT_PRICERANGE_MAX = "RangeMax";
 
     public static final String USER_PROPERTIES_FILE = "User.properties";
+    public static final String USERNAME = "Username";
+    public static final String PASSWORD = "Password";
+    public static final String EMAIL = "Email";
+    public static final String NAME = "Name";
 
     private ConfigConstants() { }
 

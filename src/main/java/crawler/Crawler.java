@@ -18,22 +18,17 @@ import java.util.*;
  */
 public abstract class Crawler {
 
-    protected Document pageDoc = null;
     private String baseUrl = null;
     private String starterUrl = null;
     protected Map<String, Object> configProperties= null;
+    private Properties userProperties = new Properties();
     protected List<TrackedProduct> trackedProducts = new ArrayList<TrackedProduct>();
 
-    protected CrawlerData retrieveDataSmart(String query) {
-        throw new UnsupportedOperationException("Smart retrieval of data not implemented yet");
-    }
-
-    protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
-        throw new UnsupportedOperationException("Search retrieval of data not implemented yet");
-    }
+    protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
     public Crawler(String filePath) {
         configProperties = ConfigurationReader.readXMLConfigFile(filePath);
+        userProperties = ConfigurationReader.readPropertiesFile(ConfigConstants.USER_PROPERTIES_FILE);
         baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
         constructProductList();
         if (connect(baseUrl) == false) {
@@ -43,7 +38,7 @@ public abstract class Crawler {
 
     private boolean connect(String url) {
         try {
-            pageDoc = Jsoup.connect(url).get();
+            Jsoup.connect(url).get();
         } catch(IOException e) {
             System.err.println("Could not connect due to IOException" + e.getMessage());
             return false;
@@ -92,7 +87,6 @@ public abstract class Crawler {
         return null;
     }
 
-
     protected CrawlerData retrieveDataByProductUrls() {
         for (TrackedProduct product : trackedProducts) {
             try {
@@ -123,7 +117,15 @@ public abstract class Crawler {
         return null;
     }
 
-    protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
+    protected CrawlerData retrieveDataSmart(String query) {
+        throw new UnsupportedOperationException("Smart retrieval of data not implemented yet");
+    }
+
+    protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
+        throw new UnsupportedOperationException("Search retrieval of data not implemented yet");
+    }
+
+
 
     protected void setStarterUrl(String starterUrl) {
         this.starterUrl = starterUrl;
@@ -148,11 +150,10 @@ public abstract class Crawler {
         for (TrackedProduct product : trackedProducts) {
             if (checkProductInRange(product)) {
                 // Send Email
-                sendMail();
+                //sendMail();
             }
         }
         return data;
-
     }
 
     private boolean checkProductInRange(TrackedProduct product) {
@@ -168,9 +169,21 @@ public abstract class Crawler {
         return isInPriceRange;
     }
 
-    private void sendMail() {
+    private void sendMail(TrackedProduct product) {
+        //TODO: consider aggregating results
+
+        String title = new StringBuilder().append("ON SALE! ")
+                .append(product.details.get(ConfigConstants.PRODUCT_TITLE)).toString();
+
+        String message = new StringBuilder().append(userProperties.getProperty(ConfigConstants.NAME))
+                .append(", great news! ")
+                .append(product.details.get(ConfigConstants.PRODUCT_TITLE))
+                .append(" is on sale now for $")
+                .append(product.price).toString();
+
         try {
-            GoogleMail.Send("rvasanda12", "Escaflowne1", "rvasanda12@gmail.com", "sometitle", "somemessage");
+            GoogleMail.Send(userProperties.getProperty(ConfigConstants.USERNAME),
+                    userProperties.getProperty(ConfigConstants.PASSWORD), userProperties.getProperty(ConfigConstants.EMAIL), title, message);
         } catch (AddressException e) {
             e.printStackTrace();
         } catch (MessagingException e) {

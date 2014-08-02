@@ -1,4 +1,6 @@
-package config; /**
+package config;
+
+/**
  * Created by Rohit on 2014-08-01.
  */
 
@@ -97,7 +99,7 @@ public class ConfigurationReader {
         InputStream stream = null;
         Properties properties = null;
         try {
-            stream = ConfigurationReader.class.getClass().getResourceAsStream(filePath);
+            stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
             properties = new Properties();
             properties.load(stream);
         } catch (IOException e) {
