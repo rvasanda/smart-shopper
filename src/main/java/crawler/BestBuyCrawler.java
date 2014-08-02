@@ -8,11 +8,10 @@ import org.jsoup.nodes.Element;
  */
 public class BestBuyCrawler extends Crawler {
 
-    private static final String BESTBUY_URL = "http://www.bestbuy.ca";
-    private static final String PROPERTIES_FILE = "BestBuy.properties";
+    private static final String CONFIG_FILE = "BestBuyConfig.xml";
 
     public BestBuyCrawler() {
-        super(BESTBUY_URL, PROPERTIES_FILE);
+        super(CONFIG_FILE);
     }
 
     /**
@@ -64,3 +63,9 @@ public class BestBuyCrawler extends Crawler {
 //            } catch (MessagingException e) {
 //                e.printStackTrace();
 //            }
+
+//        try {
+//            this.baseUrl = util.Utility.getDomainName(url);
+//        } catch(URISyntaxException e) {
+//            e.printStackTrace();
+//        }

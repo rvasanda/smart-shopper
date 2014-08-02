@@ -1,5 +1,7 @@
 package crawler;
 
+import config.ConfigConstants;
+import config.ConfigurationReader;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -7,7 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Properties;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -18,17 +20,12 @@ public abstract class Crawler {
     protected Document pageDoc = null;
     private String baseUrl = null;
     private String starterUrl = null;
-    protected Properties properties = null;
+    private Map<String, Object> configProperties= null;
 
-    public Crawler(String url, String filePath) {
-//        try {
-//            this.baseUrl = util.Utility.getDomainName(url);
-//        } catch(URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-        this.baseUrl = url;
+    public Crawler(String filePath) {
+        configProperties = ConfigurationReader.readXMLConfigFile(filePath);
+        baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
         connect(baseUrl);
-        //config.ConfigurationReader.readPropertiesFile(filePath);
     }
 
     private boolean connect(String url) {

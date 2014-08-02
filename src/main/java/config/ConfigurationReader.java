@@ -3,6 +3,7 @@ package config; /**
  */
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -22,15 +23,13 @@ import java.util.Properties;
 
 public class ConfigurationReader {
 
-    public static Map<String,String> readXMLConfigFile(String filePath) {
+    public static Map<String,Object> readXMLConfigFile(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             return null;
         }
 
-        Map<String, String> xmlProperties = new HashMap<String, String>();
+        Map<String, Object> xmlProperties = new HashMap<String, Object>();
         InputStream stream = null;
-
-
 
         try {
             stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
@@ -43,19 +42,29 @@ public class ConfigurationReader {
             // Read Base URL
 
             String expression = "/Configuration/BaseURL";
-            NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
+            Node baseUrlNode = (Node) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODE);
 
+            xmlProperties.put(baseUrlNode.getNodeName(), baseUrlNode.getTextContent());
 
             // Read HTML Div Classes
 
-            expression = "Configuration/HTMLDivClass";
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
+            expression = "Configuration/HTMLDivClass/*";
+            NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                xmlProperties.put(node.getNodeName(), node.getTextContent());
+            }
 
             // Read Tracked Products
 
             expression = "Configuration/TrackedProducts/Product";
             nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
 
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                xmlProperties.put(node.getNodeName(), node.getTextContent());
+            }
 
 
         } catch (FileNotFoundException e) {
