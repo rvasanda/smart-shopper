@@ -42,7 +42,6 @@ public class BestBuyCrawler extends Crawler {
         Element potentialProductMatch = pageDoc.getElementsByClass("product-title").size() > 0 ? pageDoc.getElementsByClass("product-title").get(0) : null;
         if (potentialProductMatch != null && potentialProductMatch.text().contains(query)) {
             isTargetPage = true;
-
         }
 
         return isTargetPage;

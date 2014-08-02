@@ -21,6 +21,9 @@ public abstract class Crawler {
     protected Map<String, Object> configProperties= null;
     protected List<TrackedProduct> trackedProducts = new ArrayList<TrackedProduct>();
 
+    protected abstract CrawlerData retrieveDataSmart(String query);
+    protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
+
     public Crawler(String filePath) {
         configProperties = ConfigurationReader.readXMLConfigFile(filePath);
         baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
@@ -80,8 +83,7 @@ public abstract class Crawler {
         }
         return null;
     }
-    protected abstract CrawlerData retrieveDataSmart(String query);
-    protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
+
 
     protected CrawlerData retrieveDataByProductUrls() {
         for (TrackedProduct product : trackedProducts) {
@@ -91,11 +93,14 @@ public abstract class Crawler {
 
                 Element productTitleElement = pageDoc.select(configProperties.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
                 String productTitleText = productTitleElement.text();
+                product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);
 
                 Element productPriceElement  = pageDoc.select(configProperties.get(ConfigConstants.PRICE_WRAPPER).toString())
                                                       .select(configProperties.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
 
                 Double productPrice = Double.parseDouble(productPriceElement.text().replace("$","").replace(",",""));
+                product.price = productPrice;
+
                 System.out.println(productPrice);
 
             } catch(IOException e) {
@@ -126,5 +131,32 @@ public abstract class Crawler {
                 trackedProducts.add((TrackedProduct) value);
             }
         }
+    }
+
+    public CrawlerData crawl() {
+        // Retrieve Data from product URLS
+        CrawlerData data = retrieveDataByProductUrls();
+        // Check if data is in range
+        for (TrackedProduct product : trackedProducts) {
+            if (checkProductInRange(product)) {
+                // Send Email
+
+            }
+        }
+        return data;
+
+    }
+
+    private boolean checkProductInRange(TrackedProduct product) {
+        boolean isInPriceRange = false;
+
+        Double min = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_PRICERANGE_MIN));
+        Double max = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_PRICERANGE_MAX));
+
+        if (product.price <= max && product.price >= min) {
+            isInPriceRange = true;
+        }
+
+        return isInPriceRange;
     }
 }
