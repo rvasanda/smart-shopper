@@ -82,7 +82,32 @@ public abstract class Crawler {
     }
     protected abstract CrawlerData retrieveDataSmart(String query);
     protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
-    protected abstract CrawlerData retrieveDataByProductUrl(String url);
+
+    protected CrawlerData retrieveDataByProductUrl(String url) {
+        for (TrackedProduct product : trackedProducts) {
+            try {
+                String productUrl = product.details.get(ConfigConstants.BASE_URL);
+                Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
+
+                Element productTitleElement = pageDoc.select(configProperties.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
+                String productTitleText = productTitleElement.text();
+
+                Element productPriceElement  = pageDoc.select(configProperties.get(ConfigConstants.PRICE_WRAPPER).toString())
+                                                      .select(configProperties.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
+
+                Double productPrice = Double.parseDouble(productPriceElement.text());
+
+            } catch(IOException e) {
+                System.err.println("Could not retrieve data due to IOException: " + e.getMessage());
+                continue;
+            } catch (Exception e) {
+                System.err.println("Could not retrieve data due to Exception: " + e.getMessage());
+                continue;
+            }
+        }
+
+        return null;
+    }
 
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 

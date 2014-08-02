@@ -1,11 +1,7 @@
 package crawler;
 
-import config.ConfigConstants;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-
-import java.io.IOException;
 
 /**
  * Created by Rohit on 2014-07-28.
@@ -33,28 +29,6 @@ public class BestBuyCrawler extends Crawler {
     @Override
     protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
         throw new UnsupportedOperationException("Search retrieval of data not implemented yet");
-    }
-
-    @Override
-    protected CrawlerData retrieveDataByProductUrl(String url) {
-
-        for (TrackedProduct product : trackedProducts) {
-            try {
-                String productUrl = product.details.get(ConfigConstants.BASE_URL);
-                Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
-
-
-
-            } catch(IOException e) {
-                System.err.println("Could not retrieve data due to IOException: " + e.getMessage());
-                continue;
-            } catch (Exception e) {
-                System.err.println("Could not retrieve data due to Exception: " + e.getMessage());
-                continue;
-            }
-        }
-
-        return null;
     }
 
     @Override
