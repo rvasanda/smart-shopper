@@ -83,6 +83,8 @@ public abstract class Crawler {
     }
     protected abstract CrawlerData retrieveDataSmart(String query);
     protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
+    protected abstract CrawlerData retrieveDataByProductUrl(String url);
+
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
     protected void setStarterUrl(String starterUrl) {

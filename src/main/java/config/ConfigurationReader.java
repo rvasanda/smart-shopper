@@ -3,7 +3,6 @@ package config; /**
  */
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -17,91 +16,47 @@ import javax.xml.xpath.XPathFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class ConfigurationReader {
-    public static void main(String[] args) {
+
+    public static Map<String,String> readXMLConfigFile(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            return null;
+        }
+
+        Map<String, String> xmlProperties = new HashMap<String, String>();
+        InputStream stream = null;
+
+
 
         try {
-            InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Employees.xml");
-            //FileInputStream file = new FileInputStream(new File("c:/employees.xml"));
-
+            stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-
             DocumentBuilder builder =  builderFactory.newDocumentBuilder();
-
             Document xmlDocument = builder.parse(stream);
-
             XPath xPath =  XPathFactory.newInstance().newXPath();
 
-            System.out.println("*************************");
-            String expression = "/Employees/Employee[@emplid='3333']/email";
-            System.out.println(expression);
-            String email = xPath.compile(expression).evaluate(xmlDocument);
-            System.out.println(email);
 
-            System.out.println("*************************");
-            expression = "/Employees/Employee/firstname";
-            System.out.println(expression);
+            // Read Base URL
+
+            String expression = "/Configuration/BaseURL";
             NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
-            }
 
-            System.out.println("*************************");
-            expression = "/Employees/Employee[@type='admin']/firstname";
-            System.out.println(expression);
+
+            // Read HTML Div Classes
+
+            expression = "Configuration/HTMLDivClass";
             nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
-            }
 
-            System.out.println("*************************");
-            expression = "/Employees/Employee[@emplid='2222']";
-            System.out.println(expression);
-            Node node = (Node) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODE);
-            if(null != node) {
-                nodeList = node.getChildNodes();
-                for (int i = 0;null!=nodeList && i < nodeList.getLength(); i++) {
-                    Node nod = nodeList.item(i);
-                    if(nod.getNodeType() == Node.ELEMENT_NODE)
-                        System.out.println(nodeList.item(i).getNodeName() + " : " + nod.getFirstChild().getNodeValue());
-                }
-            }
+            // Read Tracked Products
 
-            System.out.println("*************************");
-
-            expression = "/Employees/Employee[age>40]/firstname";
+            expression = "Configuration/TrackedProducts/Product";
             nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            System.out.println(expression);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
-            }
 
-            System.out.println("*************************");
-            expression = "/Employees/Employee[1]/firstname";
-            System.out.println(expression);
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
-            }
-            System.out.println("*************************");
-            expression = "/Employees/Employee[position() <= 2]/firstname";
-            System.out.println(expression);
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
-            }
 
-            System.out.println("*************************");
-            expression = "/Employees/Employee[last()]/firstname";
-            System.out.println(expression);
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
-            }
-
-            System.out.println("*************************");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -113,7 +68,12 @@ public class ConfigurationReader {
             e.printStackTrace();
         } catch (XPathExpressionException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
+        return xmlProperties;
     }
 
     public static Properties readPropertiesFile(String filePath) {

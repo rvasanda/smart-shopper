@@ -2,7 +2,6 @@ package crawler;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * Created by Rohit on 2014-07-28.
@@ -25,19 +24,16 @@ public class BestBuyCrawler extends Crawler {
      */
     @Override
     protected CrawlerData retrieveDataSmart(String query) {
-        Elements searchElements = pageDoc.getElementsMatchingText("Search");
-        Elements searchInputElements = searchElements.tagName("input");
-
-        System.out.println("done");
-        //Elements searchResults = pageDoc.select("#locFound").select("a[href]");
-        //Element mainContent = pageDoc.getElementById("mainContent");
-        //Elements newsHeadlines = pageDoc.select("#mp-itn b a");
-
-        return null;
+        throw new UnsupportedOperationException("Smart retrieval of data not implemented yet");
     }
 
     @Override
     protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
+        throw new UnsupportedOperationException("Search retrieval of data not implemented yet");
+    }
+
+    @Override
+    protected CrawlerData retrieveDataByProductUrl(String url) {
         return null;
     }
 
