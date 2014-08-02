@@ -10,16 +10,11 @@ public class CrawlerMain {
     public static void main(String[] args) {
         Crawler bestBuy = new BestBuyCrawler();
         long startTime = System.currentTimeMillis();
-        CrawlerData data = bestBuy.crawl();
+        bestBuy.crawl();
 
         long endTime = System.currentTimeMillis();
 
         String totalExecutionTime = TimeUnit.MILLISECONDS.toMinutes(endTime-startTime) + " minutes";
         System.out.println(totalExecutionTime);
-        if (data != null) {
-            System.out.println("PASSED");
-        } else {
-            System.out.println("FAILED");
-        }
     }
 }

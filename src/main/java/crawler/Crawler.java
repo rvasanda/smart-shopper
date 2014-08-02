@@ -87,7 +87,7 @@ public abstract class Crawler {
         return null;
     }
 
-    protected CrawlerData retrieveDataByProductUrls() {
+    protected void retrieveDataByProductUrls() {
         for (TrackedProduct product : trackedProducts) {
             try {
                 String productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
@@ -113,19 +113,15 @@ public abstract class Crawler {
                 continue;
             }
         }
-
-        return null;
     }
 
-    protected CrawlerData retrieveDataSmart(String query) {
+    protected void retrieveDataSmart(String query) {
         throw new UnsupportedOperationException("Smart retrieval of data not implemented yet");
     }
 
-    protected CrawlerData retrieveDataBySearchUrl(String url, String query) {
+    protected void retrieveDataBySearchUrl(String url, String query) {
         throw new UnsupportedOperationException("Search retrieval of data not implemented yet");
     }
-
-
 
     protected void setStarterUrl(String starterUrl) {
         this.starterUrl = starterUrl;
@@ -143,17 +139,16 @@ public abstract class Crawler {
         }
     }
 
-    public CrawlerData crawl() {
+    public void crawl() {
         // Retrieve Data from product URLS
-        CrawlerData data = retrieveDataByProductUrls();
+        retrieveDataByProductUrls();
         // Check if data is in range
         for (TrackedProduct product : trackedProducts) {
             if (checkProductInRange(product)) {
                 // Send Email
-                //sendMail();
+                sendMail(product);
             }
         }
-        return data;
     }
 
     private boolean checkProductInRange(TrackedProduct product) {
@@ -176,10 +171,12 @@ public abstract class Crawler {
                 .append(product.details.get(ConfigConstants.PRODUCT_TITLE)).toString();
 
         String message = new StringBuilder().append(userProperties.getProperty(ConfigConstants.NAME))
-                .append(", great news! ")
+                .append(", we have great news! \n\nThe ")
                 .append(product.details.get(ConfigConstants.PRODUCT_TITLE))
                 .append(" is on sale now for $")
                 .append(product.price)
+                .append(" at ")
+                .append(product.details.get(ConfigConstants.PRODUCT_URL))
                 .append(". Go buy it bitch!")
                 .append("\n\nKind regards, \n")
                 .append("Smart Shopper")
