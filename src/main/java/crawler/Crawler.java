@@ -2,11 +2,14 @@ package crawler;
 
 import config.ConfigConstants;
 import config.ConfigurationReader;
+import mail.GoogleMail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import java.io.IOException;
 import java.util.*;
 
@@ -158,5 +161,17 @@ public abstract class Crawler {
         }
 
         return isInPriceRange;
+    }
+
+    private void sendMail() {
+        try {
+            GoogleMail.Send("rvasanda12", "Escaflowne1", "rvasanda12@gmail.com", "sometitle", "somemessage");
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

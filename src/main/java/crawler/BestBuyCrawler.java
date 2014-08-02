@@ -47,19 +47,3 @@ public class BestBuyCrawler extends Crawler {
         return isTargetPage;
     }
 }
-//pageDoc.select(".prod-detail-bot").select(".prodprice").text()
-//TODO: check if price is in desired range
-//TODO: send mail if price in desired range
-//            try {
-//                GoogleMail.Send("pieman0112", "tennispro", "rvasanda12@gmail.com", "sometitle", "somemessage");
-//            } catch (AddressException e) {
-//                e.printStackTrace();
-//            } catch (MessagingException e) {
-//                e.printStackTrace();
-//            }
-
-//        try {
-//            this.baseUrl = util.Utility.getDomainName(url);
-//        } catch(URISyntaxException e) {
-//            e.printStackTrace();
-//        }
