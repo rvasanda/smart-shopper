@@ -3,7 +3,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -94,8 +93,8 @@ public abstract class Crawler {
         try {
             System.out.println(System.getProperty("java.class.path"));
             Properties prop = new Properties();
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            InputStream stream = getClass().getResourceAsStream(filePath);
+            //ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            InputStream stream = this.getClass().getResourceAsStream(filePath);
             prop.load(stream);
         } catch (IOException e) {
             System.err.println("Could not read properties file successfully");
