@@ -26,6 +26,6 @@ public class ScheduledCrawler {
                 }
             }
         };
-        scheduler.scheduleAtFixedRate(runCrawler, 0, 1, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(runCrawler, 0, 30, TimeUnit.MINUTES);
     }
 }
