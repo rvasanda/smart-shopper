@@ -83,10 +83,10 @@ public abstract class Crawler {
     protected abstract CrawlerData retrieveDataSmart(String query);
     protected abstract CrawlerData retrieveDataBySearchUrl(String url, String query);
 
-    protected CrawlerData retrieveDataByProductUrl(String url) {
+    protected CrawlerData retrieveDataByProductUrls() {
         for (TrackedProduct product : trackedProducts) {
             try {
-                String productUrl = product.details.get(ConfigConstants.BASE_URL);
+                String productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
                 Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
 
                 Element productTitleElement = pageDoc.select(configProperties.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
@@ -95,7 +95,8 @@ public abstract class Crawler {
                 Element productPriceElement  = pageDoc.select(configProperties.get(ConfigConstants.PRICE_WRAPPER).toString())
                                                       .select(configProperties.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
 
-                Double productPrice = Double.parseDouble(productPriceElement.text());
+                Double productPrice = Double.parseDouble(productPriceElement.text().replace("$","").replace(",",""));
+                System.out.println(productPrice);
 
             } catch(IOException e) {
                 System.err.println("Could not retrieve data due to IOException: " + e.getMessage());

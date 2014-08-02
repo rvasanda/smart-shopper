@@ -9,6 +9,7 @@ public class ConfigConstants {
     public static final String PRODUCT_TITLE = "ProductTitle";
     public static final String PRICE_WRAPPER = "PriceWrapper";
     public static final String PRODUCT_PRICE = "ProductPrice";
+    public static final String PRODUCT_URL = "ProductURL";
 
     private ConfigConstants() { }
 
