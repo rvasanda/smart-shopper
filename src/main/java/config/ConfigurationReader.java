@@ -1,4 +1,4 @@
-/**
+package config; /**
  * Created by Rohit on 2014-08-01.
  */
 
@@ -137,4 +137,6 @@ public class ConfigurationReader {
         }
         return properties;
     }
+
+    public static
 }

@@ -1,3 +1,5 @@
+package crawler;
+
 import mail.GoogleMail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

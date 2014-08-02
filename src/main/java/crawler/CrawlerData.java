@@ -1,3 +1,5 @@
+package crawler;
+
 /**
  * Created by Rohit on 2014-07-28.
  */

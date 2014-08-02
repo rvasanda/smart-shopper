@@ -1,3 +1,5 @@
+package crawler;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,13 +22,13 @@ public abstract class Crawler {
 
     public Crawler(String url, String filePath) {
 //        try {
-//            this.baseUrl = Utility.getDomainName(url);
+//            this.baseUrl = util.Utility.getDomainName(url);
 //        } catch(URISyntaxException e) {
 //            e.printStackTrace();
 //        }
         this.baseUrl = url;
         connect(baseUrl);
-        //ConfigurationReader.readPropertiesFile(filePath);
+        //config.ConfigurationReader.readPropertiesFile(filePath);
     }
 
     private boolean connect(String url) {
