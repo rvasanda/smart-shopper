@@ -179,7 +179,11 @@ public abstract class Crawler {
                 .append(", great news! ")
                 .append(product.details.get(ConfigConstants.PRODUCT_TITLE))
                 .append(" is on sale now for $")
-                .append(product.price).toString();
+                .append(product.price)
+                .append(". Go buy it bitch!")
+                .append("\n\nKind regards, \n")
+                .append("Smart Shopper")
+                .toString();
 
         try {
             GoogleMail.Send(userProperties.getProperty(ConfigConstants.USERNAME),
