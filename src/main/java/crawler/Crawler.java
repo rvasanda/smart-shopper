@@ -143,7 +143,7 @@ public abstract class Crawler {
         for (TrackedProduct product : trackedProducts) {
             if (checkProductInRange(product)) {
                 // Send Email
-
+                sendMail();
             }
         }
         return data;

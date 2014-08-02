@@ -13,6 +13,8 @@ public class ConfigConstants {
     public static final String PRODUCT_PRICERANGE_MIN = "RangeMin";
     public static final String PRODUCT_PRICERANGE_MAX = "RangeMax";
 
+    public static final String USER_PROPERTIES_FILE = "User.properties";
+
     private ConfigConstants() { }
 
 }

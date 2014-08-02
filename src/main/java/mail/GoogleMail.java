@@ -18,7 +18,7 @@ import java.util.Properties;
 
 /**
  *
- * @author doraemon
+ * @author whodatninja
  */
 public class GoogleMail {
     private GoogleMail() {
