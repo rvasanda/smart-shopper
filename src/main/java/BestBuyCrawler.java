@@ -1,10 +1,6 @@
-import mail.GoogleMail;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 
 /**
  * Created by Rohit on 2014-07-28.
@@ -16,12 +12,11 @@ public class BestBuyCrawler extends Crawler {
 
     public BestBuyCrawler() {
         super(BESTBUY_URL, PROPERTIES_FILE);
-
     }
 
     /**
      * Key here is to find the search box input and the search button/img/url/input. If we can identify a parent container in the dom which contains these 2
-     * things then we can be 99% sure that this is the search field we want. Next is to submit a query through this input field. this will make search 10x faster
+     * things then we can be 99% sure that this is the search field we want. Next step is to submit a query through this input field.
      *
      * @param query
      * @return
@@ -53,18 +48,21 @@ public class BestBuyCrawler extends Crawler {
         }
 
         Element potentialProductMatch = pageDoc.getElementsByClass("product-title").size() > 0 ? pageDoc.getElementsByClass("product-title").get(0) : null;
-        if (potentialProductMatch!= null && potentialProductMatch.text().contains(query)) {
-            //TODO: check if price is in desired range
-            //TODO: send mail if price in desired range
-            try {
-                GoogleMail.Send("pieman0112", "tennispro", "rvasanda12@gmail.com", "sometitle", "somemessage");
-            } catch (AddressException e) {
-                e.printStackTrace();
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
+        if (potentialProductMatch != null && potentialProductMatch.text().contains(query)) {
+            isTargetPage = true;
+
         }
 
         return isTargetPage;
     }
 }
+//pageDoc.select(".prod-detail-bot").select(".prodprice").text()
+//TODO: check if price is in desired range
+//TODO: send mail if price in desired range
+//            try {
+//                GoogleMail.Send("pieman0112", "tennispro", "rvasanda12@gmail.com", "sometitle", "somemessage");
+//            } catch (AddressException e) {
+//                e.printStackTrace();
+//            } catch (MessagingException e) {
+//                e.printStackTrace();
+//            }

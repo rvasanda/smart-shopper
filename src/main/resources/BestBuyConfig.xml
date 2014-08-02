@@ -2,22 +2,26 @@
 
 <Configuration>
 
-    <BaseURL>
-        http://www.bestbuy.ca
-    </BaseURL>
+    <BaseURL>http://www.bestbuy.ca</BaseURL>
+
+    <HTMLDivClass>
+
+        <ProductTitle>.product-title</ProductTitle>
+        <PriceWrapper>.prod-detail-bot</PriceWrapper>
+        <ProductPrice>.prodprice</ProductPrice>
+
+    </HTMLDivClass>
 
     <TrackedProducts>
 
         <Product>
-            <ProductURL>
-                http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx?
-            </ProductURL>
+            <Name>UN55H7150AFXZC</Name>
+            <ProductURL>http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx?</ProductURL>
         </Product>
 
         <Product>
-            <ProductURL>
-                http://www.bestbuy.ca/en-CA/product/playstation-4-playstation-4-console-10036/10254140.aspx?
-            </ProductURL>
+            <Name>PlayStation 4 Console</Name>
+            <ProductURL>http://www.bestbuy.ca/en-CA/product/playstation-4-playstation-4-console-10036/10254140.aspx?</ProductURL>
         </Product>
 
     </TrackedProducts>

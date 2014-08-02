@@ -26,7 +26,7 @@ public abstract class Crawler {
 //        }
         this.baseUrl = url;
         connect(baseUrl);
-        Utility.readPropertiesFile(filePath);
+        //ConfigurationReader.readPropertiesFile(filePath);
     }
 
     private boolean connect(String url) {
