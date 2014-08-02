@@ -14,22 +14,20 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 public class ConfigurationReader {
     public static void main(String[] args) {
 
         try {
-            FileInputStream file = new FileInputStream(new File("c:/employees.xml"));
+            InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Employees.xml");
+            //FileInputStream file = new FileInputStream(new File("c:/employees.xml"));
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 
             DocumentBuilder builder =  builderFactory.newDocumentBuilder();
 
-            Document xmlDocument = builder.parse(file);
+            Document xmlDocument = builder.parse(stream);
 
             XPath xPath =  XPathFactory.newInstance().newXPath();
 
