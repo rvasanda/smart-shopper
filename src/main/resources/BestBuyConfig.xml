@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<Configuration>
+
+    <BaseURL>
+        http://www.bestbuy.ca
+    </BaseURL>
+
+    <TrackedProducts>
+
+        <Product>
+            <ProductURL>
+                http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx?
+            </ProductURL>
+        </Product>
+
+        <Product>
+            <ProductURL>
+                http://www.bestbuy.ca/en-CA/product/playstation-4-playstation-4-console-10036/10254140.aspx?
+            </ProductURL>
+        </Product>
+
+    </TrackedProducts>
+
+</Configuration>
+
+
+
+
