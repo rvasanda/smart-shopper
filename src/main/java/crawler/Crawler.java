@@ -41,7 +41,7 @@ public abstract class Crawler {
     }
 
     private boolean connect(String url) {
-        logger.info("Testing connection to " + baseUrl);
+        logger.info("Testing connection to base url: " + baseUrl);
         try {
             Jsoup.connect(url).get();
         } catch(IOException e) {
@@ -53,7 +53,7 @@ public abstract class Crawler {
             logger.error(e.getMessage(), e);
             return false;
         }
-        logger.info("Connection successful...");
+        logger.info("Connection successful");
         return true;
     }
 
@@ -96,14 +96,20 @@ public abstract class Crawler {
     }
 
     protected void retrieveDataByProductUrls() {
+        logger.info("Retrieving data from product urls");
+
+        String productUrl = null;
+
         for (TrackedProduct product : trackedProducts) {
             try {
-                String productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
+                productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
                 Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
+                logger.info("Connected to " + productUrl);
                 pageDoc.select("script, .hidden").remove();
 
                 Element productTitleElement = pageDoc.select(configProperties.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
                 String productTitleText = productTitleElement.text();
+                logger.info("Product name: " + productTitleText);
                 product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);
 
                 Element productPriceElement  = pageDoc.select(configProperties.get(ConfigConstants.PRICE_WRAPPER).toString())
@@ -111,14 +117,14 @@ public abstract class Crawler {
 
                 Double productPrice = Double.parseDouble(productPriceElement.text().replace("$","").replace(",",""));
                 product.price = productPrice;
-
-                System.out.println(productPrice);
-
+                logger.info("Product price: " + productPriceElement.text());
             } catch(IOException e) {
-                System.err.println("Could not retrieve data due to IOException: " + e.getMessage());
+                logger.error("Connection to url failed: " + productUrl);
+                logger.error(e.getMessage(), e);
                 continue;
             } catch (Exception e) {
-                System.err.println("Could not retrieve data due to Exception: " + e.getMessage());
+                logger.error("Connection to url failed: " + productUrl);
+                logger.error(e.getMessage(), e);
                 continue;
             }
         }
@@ -167,6 +173,7 @@ public abstract class Crawler {
         Double max = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_PRICERANGE_MAX));
 
         if (product.price <= max && product.price >= min) {
+            logger.info("Product " + product.details.get(ConfigConstants.PRODUCT_TITLE) + " is in the price range");
             isInPriceRange = true;
         }
 
@@ -194,12 +201,13 @@ public abstract class Crawler {
         try {
             GoogleMail.Send(userProperties.getProperty(ConfigConstants.USERNAME),
                     userProperties.getProperty(ConfigConstants.PASSWORD), userProperties.getProperty(ConfigConstants.EMAIL), title, message);
+            logger.info("Sending mail to:  " + userProperties.getProperty((ConfigConstants.EMAIL)) + " for product " + product.details.get(ConfigConstants.PRODUCT_TITLE));
         } catch (AddressException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 }
