@@ -9,12 +9,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Rohit on 2014-08-02.
  */
-public class ScheduledCrawler {
+public class ScheduledCrawlerService {
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private List<Crawler> crawlers = new ArrayList<Crawler>();
 
-    public ScheduledCrawler(List<Crawler> crawlers) {
+    public ScheduledCrawlerService(List<Crawler> crawlers) {
         this.crawlers = crawlers;
     }
 
