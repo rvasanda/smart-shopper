@@ -21,7 +21,6 @@ public class CrawlerMain {
         crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.BESTBUY));
         crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.FUTURESHOP));
 
-        logger.info("Initializing Scheduled Crawler Service");
         ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
         scheduledCrawlerService.runScheduledCrawler();
     }
