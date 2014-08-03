@@ -8,3 +8,4 @@ Things to be done:
     - Logging messages need to be added to classes
   - Need to read config files from external folder and not resources folder  
   - Consider splitting custom crawler configurations from tracked product configurations
+  - Make crawler schedule configurable
