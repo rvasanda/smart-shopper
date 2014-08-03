@@ -5,6 +5,8 @@ package config;
  */
 
 import crawler.TrackedProduct;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -26,8 +28,12 @@ import java.util.Properties;
 
 public class ConfigurationReader {
 
+    private static final Logger logger = LogManager.getLogger(ConfigurationReader.class);
+
     public static Map<String,Object> readXMLConfigFile(String filePath) {
+
         if (filePath == null || filePath.isEmpty()) {
+            logger.error("Filepath is null or empty!");
             return null;
         }
 
@@ -40,7 +46,6 @@ public class ConfigurationReader {
             DocumentBuilder builder =  builderFactory.newDocumentBuilder();
             Document xmlDocument = builder.parse(stream);
             XPath xPath =  XPathFactory.newInstance().newXPath();
-
 
             // Read Base URL
 
@@ -77,20 +82,19 @@ public class ConfigurationReader {
 
                 xmlProperties.put(product.details.get("Name"), product);
             }
-
-
+            logger.info("Configuration for " + filePath + " read successfully");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (SAXException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (XPathExpressionException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return xmlProperties;
     }
@@ -103,15 +107,17 @@ public class ConfigurationReader {
             properties = new Properties();
             properties.load(stream);
         } catch (IOException e) {
-            System.err.println("Could not read properties file successfully");
-            e.printStackTrace();
-        } finally {
+            logger.error(e.getMessage(), e);
+        } catch (NullPointerException e) {
+            logger.error(e.getMessage(), e);
+        }
+        finally {
             try {
                 if (stream != null) {
                     stream.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
         return properties;
