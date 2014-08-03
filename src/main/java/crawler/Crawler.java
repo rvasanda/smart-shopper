@@ -92,6 +92,11 @@ public abstract class Crawler {
             try {
                 String productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
                 Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
+                pageDoc.select("script, .hidden").remove();
+                //Whitelist whitelist = new Whitelist();
+                //whitelist.addTags("script");
+                //Cleaner cleaner = new Cleaner(whitelist);
+                //pageDoc = cleaner.clean(pageDoc);
 
                 Element productTitleElement = pageDoc.select(configProperties.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
                 String productTitleText = productTitleElement.text();

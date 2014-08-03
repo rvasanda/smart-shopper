@@ -4,9 +4,9 @@
 
     <BaseURL>http://www.futureshop.ca</BaseURL>
     <HTMLDivClass>
-        <ProductTitle>.product-title</ProductTitle>
+        <ProductTitle>.prod-title</ProductTitle>
         <PriceWrapper>.prod-detail-bot</PriceWrapper>
-        <ProductPrice>.prodprice</ProductPrice>
+        <ProductPrice>.prod-price</ProductPrice>
     </HTMLDivClass>
     <TrackedProducts>
         <Product>

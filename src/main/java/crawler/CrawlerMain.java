@@ -11,7 +11,7 @@ public class CrawlerMain {
     public static void main(String[] args) {
         List<Crawler> crawlers = new ArrayList<Crawler>();
 
-        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.BESTBUY));
+        //crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.BESTBUY));
         crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.FUTURESHOP));
 
         ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
