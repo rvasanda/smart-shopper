@@ -1,5 +1,6 @@
-package crawler;
+package crawler.customcrawlers;
 
+import crawler.Crawler;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 

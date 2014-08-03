@@ -9,11 +9,10 @@ import java.util.List;
 public class CrawlerMain {
 
     public static void main(String[] args) {
-        CrawlerFactory crawlerFactory = new CrawlerFactory();
-        Crawler bestBuy = crawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.BESTBUY);
-
         List<Crawler> crawlers = new ArrayList<Crawler>();
-        crawlers.add(bestBuy);
+
+        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.BESTBUY));
+        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.FUTURESHOP));
 
         ScheduledCrawler scheduledCrawler = new ScheduledCrawler(crawlers);
         scheduledCrawler.runCrawlerEveryHour();
