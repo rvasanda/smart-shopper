@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ScheduledCrawlerService {
 
-    private static final Logger logger = LogManager.getLogger(CrawlerMain.class);
+    private static final Logger logger = LogManager.getLogger(ScheduledCrawlerService.class);
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private List<Crawler> crawlers = new ArrayList<Crawler>();

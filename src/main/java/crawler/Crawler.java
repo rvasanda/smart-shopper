@@ -3,6 +3,8 @@ package crawler;
 import config.ConfigConstants;
 import config.ConfigurationReader;
 import mail.GoogleMail;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,6 +19,8 @@ import java.util.*;
  * Created by Rohit on 2014-07-28.
  */
 public abstract class Crawler {
+
+    private static final Logger logger = LogManager.getLogger(Crawler.class);
 
     private String baseUrl = null;
     private String starterUrl = null;
@@ -37,15 +41,19 @@ public abstract class Crawler {
     }
 
     private boolean connect(String url) {
+        logger.info("Testing connection to " + baseUrl);
         try {
             Jsoup.connect(url).get();
         } catch(IOException e) {
-            System.err.println("Could not connect due to IOException" + e.getMessage());
+            logger.error("Connection failed!");
+            logger.error(e.getMessage(), e);
             return false;
         } catch (Exception e) {
-            System.err.println("Could not connect due to Exception" + e.getMessage());
+            logger.error("Connection failed!");
+            logger.error(e.getMessage(), e);
             return false;
         }
+        logger.info("Connection successful...");
         return true;
     }
 
