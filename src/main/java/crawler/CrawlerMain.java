@@ -14,19 +14,15 @@ public class CrawlerMain {
     private static final Logger logger = LogManager.getLogger(CrawlerMain.class);
 
     public static void main(String[] args) {
+        logger.info("Smart-Shopper starting...");
+
         List<Crawler> crawlers = new ArrayList<Crawler>();
 
         crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.BESTBUY));
         crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.FUTURESHOP));
-        printAvailbleCrawlers(crawlers);
-        ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
-        scheduledCrawlerService.runCrawlerEveryHour();
-    }
 
-    private static void printAvailbleCrawlers(List<Crawler> availableCrawlers) {
-        logger.debug("sad");
-        for (Crawler c : availableCrawlers) {
-            logger.debug("sad");
-        }
+        logger.info("Initializing Scheduled Crawler Service");
+        ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
+        scheduledCrawlerService.runScheduledCrawler();
     }
 }

@@ -18,7 +18,7 @@ public class ScheduledCrawlerService {
         this.crawlers = crawlers;
     }
 
-    public void runCrawlerEveryHour() {
+    public void runScheduledCrawler() {
         final Runnable runCrawler = new Runnable() {
             public void run() {
                 for (Crawler c : crawlers) {
