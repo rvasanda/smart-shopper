@@ -8,6 +8,12 @@
     <artifactId>Smart-Shopper</artifactId>
     <version>1.0</version>
 
+    <properties>
+        <jarName>Smart-Shopper</jarName>
+        <base.dir>smart-shopper</base.dir>
+        <config.dir>config</config.dir>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -45,39 +51,125 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>crawler.CrawlerMain</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <finalName>Smart-Shopper</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>target/${base.dir}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <additionalClasspathElements>
-                        <additionalClasspathElement>path/to/additional/resources</additionalClasspathElement>
-                        <additionalClasspathElement>path/to/additional/jar</additionalClasspathElement>
-                    </additionalClasspathElements>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>../lib/</classpathPrefix>
+                            <classpathPrefix>../config/</classpathPrefix>
+                            <mainClass>crawler.CrawlerMain</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>../lib</Class-Path>
+                            <Class-Path>../config</Class-Path>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
+            </plugin>
+            <!--<plugin>-->
+                <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<archive>-->
+                        <!--<manifest>-->
+                            <!--<mainClass>crawler.CrawlerMain</mainClass>-->
+                        <!--</manifest>-->
+                    <!--</archive>-->
+                    <!--<descriptorRefs>-->
+                        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+                    <!--</descriptorRefs>-->
+                    <!--<finalName>Smart-Shopper</finalName>-->
+                    <!--<appendAssemblyId>false</appendAssemblyId>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>make-assembly</id> &lt;!&ndash; this is used for inheritance merges &ndash;&gt;-->
+                        <!--<phase>test</phase> &lt;!&ndash; bind to the packaging phase &ndash;&gt;-->
+                        <!--<goals>-->
+                            <!--<goal>single</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>com.github.goldin</groupId>
+                <artifactId>copy-maven-plugin</artifactId>
+                <version>0.2.5</version>
+                <executions>
+                    <execution>
+                        <id>deploy-to-local-directory</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <skipIdentical>false</skipIdentical>
+                            <failIfNotFound>false</failIfNotFound>
+                            <resources>
+                                <resource>
+                                    <description>Copy main jar to ${base.dir}</description>
+                                    <targetPath>target/${base.dir}</targetPath>
+                                    <directory>target</directory>
+                                    <includes>
+                                        <include>Smart-Shopper-1.0.jar</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <description>Copy config folder to ${base.dir}</description>
+                                    <targetPath>target/${base.dir}/${config.dir}</targetPath>
+                                    <directory>config</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <property name="compile_classpath" refid="maven.compile.classpath" />
+                                <property name="runtime_classpath" refid="maven.runtime.classpath" />
+                                <property name="test_classpath" refid="maven.test.classpath" />
+                                <property name="plugin_classpath" refid="maven.plugin.classpath" />
+
+                                <echo message="compile classpath: ${compile_classpath}" />
+                                <echo message="runtime classpath: ${runtime_classpath}" />
+                                <echo message="test classpath: ${test_classpath}" />
+                                <echo message="plugin classpath: ${plugin_classpath}" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
