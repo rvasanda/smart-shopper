@@ -14,7 +14,6 @@
         <config.dir>config</config.dir>
     </properties>
 
-
     <build>
         <plugins>
             <plugin>
@@ -50,10 +49,6 @@
                         <manifestEntries>
                             <Class-Path>config/</Class-Path>
                         </manifestEntries>
-                        <!--<manifestEntries>-->
-                            <!--<Class-Path>smart-shopper/lib</Class-Path>-->
-                            <!--<Class-Path>smart-shopper/config</Class-Path>-->
-                        <!--</manifestEntries>-->
                     </archive>
                 </configuration>
             </plugin>
@@ -92,6 +87,7 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
 
         <dependency>
