@@ -30,6 +30,7 @@ public class ScheduledCrawlerService {
             public void run() {
                 for (Crawler c : crawlers) {
                     c.crawl();
+                    c.updateConfigurations();
                 }
             }
         };

@@ -24,6 +24,7 @@ public abstract class Crawler {
 
     private String baseUrl = null;
     private String starterUrl = null;
+    private String filePath = null;
     protected Map<String, Object> configProperties= null;
     private Properties userProperties = new Properties();
     protected List<TrackedProduct> trackedProducts = new ArrayList<TrackedProduct>();
@@ -31,13 +32,23 @@ public abstract class Crawler {
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
     public Crawler(String filePath) {
+        this.filePath = filePath;
+        initialize();
+    }
+
+    private void initialize() {
         configProperties = ConfigurationReader.readXMLConfigFile(filePath);
         userProperties = ConfigurationReader.readPropertiesFile(ConfigConstants.USER_PROPERTIES_FILE);
         baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
         constructProductList();
         if (connect(baseUrl) == false) {
+            logger.error("Quitting program because of unsuccessful connection...");
             System.exit(0);
         }
+    }
+
+    public void updateConfigurations() {
+        configProperties = ConfigurationReader.readXMLConfigFile(filePath);
     }
 
     private boolean connect(String url) {
