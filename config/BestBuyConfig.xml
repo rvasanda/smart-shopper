@@ -15,12 +15,6 @@
             <RangeMin>1500</RangeMin>
             <RangeMax>1600</RangeMax>
         </Product>
-        <Product>
-            <Name>PlayStation 4 Console</Name>
-            <ProductURL>http://www.bestbuy.ca/en-CA/product/playstation-4-playstation-4-console-10036/10254140.aspx?</ProductURL>
-            <RangeMin>350</RangeMin>
-            <RangeMax>400</RangeMax>
-        </Product>
     </TrackedProducts>
 </Configuration>
 

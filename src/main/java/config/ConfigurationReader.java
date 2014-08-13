@@ -36,11 +36,12 @@ public class ConfigurationReader {
         }
 
         Map<String, Object> xmlProperties = new HashMap<String, Object>();
-        BufferedInputStream stream = null;
+        InputStream stream = null;
 
         try {
             //stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
-            stream = new BufferedInputStream(new FileInputStream(filePath));
+            //stream = new BufferedInputStream(new FileInputStream(filePath));
+            stream = new FileInputStream(new File(filePath));
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder =  builderFactory.newDocumentBuilder();
             Document xmlDocument = builder.parse(stream);
@@ -94,6 +95,14 @@ public class ConfigurationReader {
             logger.error(e.getMessage(), e);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+        } finally {
+            try {
+                if (stream != null) {
+                    stream.close();
+                }
+            } catch (IOException e) {
+                logger.error(e.getMessage(), e);
+            }
         }
         return xmlProperties;
     }
