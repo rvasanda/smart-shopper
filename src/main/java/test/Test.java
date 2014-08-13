@@ -17,9 +17,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Created by Rohit on 2014-08-02.
@@ -27,8 +25,9 @@ import java.io.InputStream;
 public class Test {
 
     public static void main(String[] args) {
-        testBruteForce();
-        testMail();
+        //testBruteForce();
+        //testMail();
+        testConfigReader();
     }
 
     private static void testBruteForce() {
@@ -59,8 +58,11 @@ public class Test {
     private static void testConfigReader() {
 
         try {
-            InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("Employees.xml");
+            //InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("BestBuyConfig.xml");
             //FileInputStream file = new FileInputStream(new File("c:/employees.xml"));
+
+            //THIS WORKS
+            BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config/BestBuyConfig.xml"));
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 

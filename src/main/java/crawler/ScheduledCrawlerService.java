@@ -34,7 +34,7 @@ public class ScheduledCrawlerService {
                 }
             }
         };
-        scheduler.scheduleAtFixedRate(runCrawler, 0, 30, TimeUnit.MINUTES);
-        logger.info("Crawler Service scheduled to run every 30 minutes");
+        scheduler.scheduleAtFixedRate(runCrawler, 0, 2, TimeUnit.MINUTES);
+        logger.info("Crawler Service scheduled to run every 2 minutes");
     }
 }

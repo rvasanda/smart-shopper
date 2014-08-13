@@ -19,9 +19,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -38,10 +36,11 @@ public class ConfigurationReader {
         }
 
         Map<String, Object> xmlProperties = new HashMap<String, Object>();
-        InputStream stream = null;
+        BufferedInputStream stream = null;
 
         try {
-            stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
+            //stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
+            stream = new BufferedInputStream(new FileInputStream(filePath));
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder =  builderFactory.newDocumentBuilder();
             Document xmlDocument = builder.parse(stream);
