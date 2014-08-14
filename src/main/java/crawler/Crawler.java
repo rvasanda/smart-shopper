@@ -156,7 +156,7 @@ public abstract class Crawler {
 
     private void constructProductList() {
         Iterator iterator = configProperties.values().iterator();
-
+        trackedProducts.clear();
         while (iterator.hasNext()) {
             Object value = iterator.next();
 
