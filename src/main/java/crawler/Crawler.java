@@ -49,6 +49,7 @@ public abstract class Crawler {
 
     public void updateConfigurations() {
         configProperties = ConfigurationReader.readXMLConfigFile(filePath);
+        constructProductList();
     }
 
     private boolean connect(String url) {
@@ -120,7 +121,7 @@ public abstract class Crawler {
 
                 Element productTitleElement = pageDoc.select(configProperties.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
                 String productTitleText = productTitleElement.text();
-                logger.info("Product name: " + productTitleText);
+                logger.info("PRODUCT NAME: " + productTitleText);
                 product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);
 
                 Element productPriceElement  = pageDoc.select(configProperties.get(ConfigConstants.PRICE_WRAPPER).toString())

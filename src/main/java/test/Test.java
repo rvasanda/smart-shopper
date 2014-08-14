@@ -27,7 +27,9 @@ public class Test {
     public static void main(String[] args) {
         //testBruteForce();
         //testMail();
-        testConfigReader();
+        //testConfigReader();
+        testConfigReader2();
+        testConfigReader2();
     }
 
     private static void testBruteForce() {
@@ -55,6 +57,7 @@ public class Test {
             e.printStackTrace();
         }
     }
+
     private static void testConfigReader() {
 
         try {
@@ -152,5 +155,9 @@ public class Test {
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void testConfigReader2() {
+        ConfigurationReader.readXMLConfigFile("config/BestBuyConfig.xml");
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<Configuration>
+
+    <BaseURL>http://www.futureshop.ca</BaseURL>
+    <HTMLDivClass>
+        <ProductTitle>.prod-title</ProductTitle>
+        <PriceWrapper>.prod-detail-bot</PriceWrapper>
+        <ProductPrice>.prod-price</ProductPrice>
+    </HTMLDivClass>
+    <TrackedProducts>
+        <Product>
+            <Name>un55h6400afxzc</Name>
+            <ProductURL>http://www.futureshop.ca/en-ca/product/samsung-samsung-55-1080p-120hz-3d-led-smart-tv-un55h6400afxzc-future-shop-exclusive-un55h6400afxzc/10289672.aspx</ProductURL>
+            <RangeMin>1200</RangeMin>
+            <RangeMax>1300</RangeMax>
+        </Product>
+        <Product>
+            <Name>PlayStation 4 Console</Name>
+            <ProductURL>http://www.futureshop.ca/en-CA/product/playstation-4-playstation-4-console-10036/10254140.aspx</ProductURL>
+            <RangeMin>350</RangeMin>
+            <RangeMax>400</RangeMax>
+        </Product>
+    </TrackedProducts>
+</Configuration>
+
+
+
+
