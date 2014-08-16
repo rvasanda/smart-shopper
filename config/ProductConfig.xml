@@ -16,17 +16,19 @@
     </Crawlers>
 
     <TrackedProducts>
+        <!--Name is optional-->
+        <!--ProductURL is the URL that takes you to the product page-->
+        <!--MaxPrice refers to the maximum price that you are willing to pay for that product-->
+
         <Product>
             <Name>un55h6400afxzc</Name>
             <ProductURL>http://www.futureshop.ca/en-ca/product/samsung-samsung-55-1080p-120hz-3d-led-smart-tv-un55h6400afxzc-future-shop-exclusive-un55h6400afxzc/10289672.aspx</ProductURL>
-            <RangeMin>1200</RangeMin>
-            <RangeMax>1300</RangeMax>
+            <MaxPrice>1300</MaxPrice>
         </Product>
         <Product>
             <Name>PlayStation 4 Console</Name>
             <ProductURL>http://www.futureshop.ca/en-CA/product/playstation-4-playstation-4-console-10036/10254140.aspx</ProductURL>
-            <RangeMin>350</RangeMin>
-            <RangeMax>400</RangeMax>
+            <MaxPrice>400</MaxPrice>
         </Product>
     </TrackedProducts>
 </Configuration>
