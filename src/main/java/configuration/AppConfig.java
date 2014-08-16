@@ -9,6 +9,7 @@ import crawler.TrackedProduct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -38,7 +39,7 @@ public class AppConfig {
     private static File configFile = null;
 
     static {
-        readXMLConfigFile();
+        //readXMLConfigFile();
         //readPropertiesFile();
     }
 
@@ -73,12 +74,13 @@ public class AppConfig {
             for (int i = 0; i < crawlerDetailsList.getLength(); ++i) {
                 Node node = crawlerDetailsList.item(i);
                 CrawlerDetails crawler = new CrawlerDetails();
-                //crawler.details.put("Name", node.)
+                crawler.details.put("id", ((Element)node).getAttribute("id"));
                 NodeList crawlerDetailsNodeList = (NodeList) xPath.compile(childExpression).evaluate(node, XPathConstants.NODESET);
                 for (int j = 0; j < crawlerDetailsNodeList.getLength(); ++j) {
                     Node detailsNode = crawlerDetailsNodeList.item(i);
                     crawler.details.put(detailsNode.getNodeName(), detailsNode.getTextContent());
                 }
+                crawlerDetails.add(crawler);
             }
 
 
