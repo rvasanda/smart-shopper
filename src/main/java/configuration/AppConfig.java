@@ -68,22 +68,27 @@ public class AppConfig {
             String expression = "Configuration/Crawlers/Crawler";
             NodeList crawlerDetailsList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
 
-            // Read HTML Div Classes
+            // Read Crawler Details
 
-            expression = "Configuration/HTMLDivClass/*";
-            NodeList nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+            for (int i = 0; i < crawlerDetailsList.getLength(); ++i) {
+                Node node = crawlerDetailsList.item(i);
+                CrawlerDetails crawler = new CrawlerDetails();
+                //crawler.details.put("Name", node.)
+                NodeList crawlerDetailsNodeList = (NodeList) xPath.compile(childExpression).evaluate(node, XPathConstants.NODESET);
+                for (int j = 0; j < crawlerDetailsNodeList.getLength(); ++j) {
+                    Node detailsNode = crawlerDetailsNodeList.item(i);
+                    crawler.details.put(detailsNode.getNodeName(), detailsNode.getTextContent());
+                }
             }
+
 
             // Read Tracked Products
 
             expression = "Configuration/TrackedProducts/Product";
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
+            NodeList products = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
 
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+            for (int i = 0; i < products.getLength(); i++) {
+                Node node = products.item(i);
                 TrackedProduct product = new TrackedProduct();
                 NodeList productDetails = (NodeList) xPath.compile(childExpression).evaluate(node, XPathConstants.NODESET);
 
