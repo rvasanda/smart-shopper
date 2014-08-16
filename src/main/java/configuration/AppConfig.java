@@ -29,10 +29,14 @@ public class AppConfig {
     private static final Logger logger = LogManager.getLogger(AppConfig.class);
 
     private static final String PRODUCT_CONFIG_FILE = ConfigConstants.CONFIG_FOLDER + "ProductConfig.xml";
+    private static final String APP_PROPERTIES_FILE = ConfigConstants.CONFIG_FOLDER + "App.properties";
 
+    private static Map<String, Object> productConfig = null;
+    private static Properties appProperties = new Properties();
 
-    public static void initializeConfig() {
-
+    static {
+        productConfig = readXMLConfigFile(PRODUCT_CONFIG_FILE);
+        appProperties = readPropertiesFile(APP_PROPERTIES_FILE);
     }
 
     private AppConfig() { }
@@ -48,8 +52,6 @@ public class AppConfig {
         InputStream stream = null;
 
         try {
-            //stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
-            //stream = new BufferedInputStream(new FileInputStream(filePath));
             stream = new FileInputStream(new File(filePath));
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder =  builderFactory.newDocumentBuilder();
