@@ -1,5 +1,6 @@
 package test;
 
+import configuration.AppConfig;
 import mail.GoogleMail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,7 +18,10 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created by Rohit on 2014-08-02.
@@ -28,8 +32,9 @@ public class Test {
         //testBruteForce();
         //testMail();
         //testConfigReader();
-        testConfigReader2();
-        testConfigReader2();
+        //testConfigReader2();
+        //testConfigReader2();
+        testAppConfigReader();
     }
 
     private static void testBruteForce() {
@@ -159,5 +164,9 @@ public class Test {
 
     private static void testConfigReader2() {
         ConfigurationReader.readXMLConfigFile("configuration/BestBuyConfig.xml");
+    }
+
+    private static void testAppConfigReader() {
+        AppConfig.readXMLConfigFile();
     }
 }

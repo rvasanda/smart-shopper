@@ -37,7 +37,7 @@ public abstract class Crawler {
     }
 
     private void initialize() {
-        configProperties = AppConfig.readXMLConfigFile(filePath);
+        //configProperties = AppConfig.readXMLConfigFile(filePath);
         userProperties = AppConfig.readPropertiesFile(ConfigConstants.USER_PROPERTIES_FILE);
         baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
         constructProductList();
@@ -48,7 +48,7 @@ public abstract class Crawler {
     }
 
     public void updateConfigurations() {
-        configProperties = AppConfig.readXMLConfigFile(filePath);
+        //configProperties = AppConfig.readXMLConfigFile(filePath);
         constructProductList();
     }
 
