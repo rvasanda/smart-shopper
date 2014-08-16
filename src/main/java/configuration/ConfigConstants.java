@@ -1,4 +1,4 @@
-package config;
+package configuration;
 
 /**
  * Created by Rohit on 2014-08-02.
@@ -19,7 +19,7 @@ public class ConfigConstants {
     public static final String EMAIL = "Email";
     public static final String NAME = "Name";
 
-    public static final String CONFIG_FOLDER = System.getProperty("os.name").contains("OS X") ? "config/" : "config\\";
+    public static final String CONFIG_FOLDER = System.getProperty("os.name").contains("OS X") ? "configuration/" : "configuration\\";
 
     private ConfigConstants() { }
 

@@ -1,7 +1,7 @@
 package crawler;
 
-import config.ConfigConstants;
-import config.ConfigurationReader;
+import configuration.AppConfig;
+import configuration.ConfigConstants;
 import mail.GoogleMail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,8 +37,8 @@ public abstract class Crawler {
     }
 
     private void initialize() {
-        configProperties = ConfigurationReader.readXMLConfigFile(filePath);
-        userProperties = ConfigurationReader.readPropertiesFile(ConfigConstants.USER_PROPERTIES_FILE);
+        configProperties = AppConfig.readXMLConfigFile(filePath);
+        userProperties = AppConfig.readPropertiesFile(ConfigConstants.USER_PROPERTIES_FILE);
         baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
         constructProductList();
         if (connect(baseUrl) == false) {
@@ -48,7 +48,7 @@ public abstract class Crawler {
     }
 
     public void updateConfigurations() {
-        configProperties = ConfigurationReader.readXMLConfigFile(filePath);
+        configProperties = AppConfig.readXMLConfigFile(filePath);
         constructProductList();
     }
 

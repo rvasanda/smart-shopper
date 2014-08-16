@@ -65,7 +65,7 @@ public class Test {
             //FileInputStream file = new FileInputStream(new File("c:/employees.xml"));
 
             //THIS WORKS
-            BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config/BestBuyConfig.xml"));
+            BufferedInputStream stream = new BufferedInputStream(new FileInputStream("configuration/BestBuyConfig.xml"));
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 
@@ -158,6 +158,6 @@ public class Test {
     }
 
     private static void testConfigReader2() {
-        ConfigurationReader.readXMLConfigFile("config/BestBuyConfig.xml");
+        ConfigurationReader.readXMLConfigFile("configuration/BestBuyConfig.xml");
     }
 }
