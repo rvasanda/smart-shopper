@@ -1,4 +1,4 @@
-package config;
+package configuration;
 
 /**
  * Created by Rohit on 2014-08-01.
@@ -24,9 +24,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class ConfigurationReader {
+public class AppConfig {
 
-    private static final Logger logger = LogManager.getLogger(ConfigurationReader.class);
+    private static final Logger logger = LogManager.getLogger(AppConfig.class);
+
+    private static final String PRODUCT_CONFIG_FILE = ConfigConstants.CONFIG_FOLDER + "ProductConfig.xml";
+
+
+    public static void initializeConfig() {
+
+    }
+
+    private AppConfig() { }
 
     public static Map<String,Object> readXMLConfigFile(String filePath) {
 
