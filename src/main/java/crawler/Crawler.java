@@ -24,23 +24,15 @@ public abstract class Crawler {
 
     private String baseUrl = null;
     private String starterUrl = null;
-    private String filePath = null;
-    protected Map<String, Object> configProperties= null;
-    private Properties userProperties = new Properties();
-    protected List<TrackedProduct> trackedProducts = new ArrayList<TrackedProduct>();
 
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
-    public Crawler(String filePath) {
-        this.filePath = filePath;
-        initialize();
+    public Crawler() {
+
     }
 
     private void initialize() {
-        //configProperties = AppConfig.readXMLConfigFile(filePath);
-        userProperties = AppConfig.readPropertiesFile(ConfigConstants.USER_PROPERTIES_FILE);
-        baseUrl = configProperties.get(ConfigConstants.BASE_URL).toString();
-        constructProductList();
+        baseUrl = AppConfig.
         if (connect(baseUrl) == false) {
             logger.error("Quitting program because of unsuccessful connection...");
             System.exit(0);
@@ -48,8 +40,7 @@ public abstract class Crawler {
     }
 
     public void updateConfigurations() {
-        //configProperties = AppConfig.readXMLConfigFile(filePath);
-        constructProductList();
+        AppConfig.readXMLConfigFile();
     }
 
     private boolean connect(String url) {
@@ -112,14 +103,14 @@ public abstract class Crawler {
 
         String productUrl = null;
 
-        for (TrackedProduct product : trackedProducts) {
+        for (TrackedProduct product : AppConfig.getProducts()) {
             try {
                 productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
                 Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
                 logger.info("Connected to " + productUrl);
                 pageDoc.select("script, .hidden").remove();
 
-                Element productTitleElement = pageDoc.select(configProperties.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
+                Element productTitleElement = pageDoc.select(.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
                 String productTitleText = productTitleElement.text();
                 logger.info("PRODUCT NAME: " + productTitleText);
                 product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);

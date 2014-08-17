@@ -167,6 +167,6 @@ public class Test {
     }
 
     private static void testAppConfigReader() {
-        AppConfig.readXMLConfigFile();
+        AppConfig.getCrawlerDetails();
     }
 }
