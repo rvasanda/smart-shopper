@@ -145,23 +145,11 @@ public abstract class Crawler {
         this.starterUrl = starterUrl;
     }
 
-    private void constructProductList() {
-        Iterator iterator = configProperties.values().iterator();
-        trackedProducts.clear();
-        while (iterator.hasNext()) {
-            Object value = iterator.next();
-
-            if (value instanceof TrackedProduct) {
-                trackedProducts.add((TrackedProduct) value);
-            }
-        }
-    }
-
     public void crawl() {
         // Retrieve Data from product URLS
         retrieveDataByProductUrls();
         // Check if data is in range
-        for (TrackedProduct product : trackedProducts) {
+        for (TrackedProduct product : AppConfig.getProducts()) {
             if (checkProductInRange(product)) {
                 // Send Email
                 sendMail(product);
@@ -189,7 +177,7 @@ public abstract class Crawler {
         String title = new StringBuilder().append("ON SALE! ")
                 .append(product.details.get(ConfigConstants.PRODUCT_TITLE)).toString();
 
-        String message = new StringBuilder().append(userProperties.getProperty(ConfigConstants.NAME))
+        String message = new StringBuilder().append(AppConfig.getProperty(ConfigConstants.NAME))
                 .append(", we have great news! \n\nThe ")
                 .append(product.details.get(ConfigConstants.PRODUCT_TITLE))
                 .append(" is on sale now for $")
@@ -202,9 +190,9 @@ public abstract class Crawler {
                 .toString();
 
         try {
-            GoogleMail.Send(userProperties.getProperty(ConfigConstants.USERNAME),
-                    userProperties.getProperty(ConfigConstants.PASSWORD), userProperties.getProperty(ConfigConstants.EMAIL), title, message);
-            logger.info("Sending mail to:  " + userProperties.getProperty((ConfigConstants.EMAIL)) + " for product " + product.details.get(ConfigConstants.PRODUCT_TITLE));
+            GoogleMail.Send(AppConfig.getProperty(ConfigConstants.USERNAME),
+                    AppConfig.getProperty(ConfigConstants.PASSWORD), AppConfig.getProperty(ConfigConstants.EMAIL), title, message);
+            logger.info("Sending mail to:  " + AppConfig.getProperty((ConfigConstants.EMAIL)) + " for product " + product.details.get(ConfigConstants.PRODUCT_TITLE));
         } catch (AddressException e) {
             logger.error(e.getMessage(), e);
         } catch (MessagingException e) {

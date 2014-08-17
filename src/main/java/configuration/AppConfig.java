@@ -154,7 +154,7 @@ public class AppConfig {
         return appProperties;
     }
 
-    public static String getAppProperty(String key) {
+    public static String getProperty(String key) {
         return appProperties.getProperty(key);
     }
 
