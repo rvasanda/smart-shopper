@@ -77,7 +77,7 @@ public class AppConfig {
                 crawler.details.put("id", ((Element)node).getAttribute("id"));
                 NodeList crawlerDetailsNodeList = (NodeList) xPath.compile(childExpression).evaluate(node, XPathConstants.NODESET);
                 for (int j = 0; j < crawlerDetailsNodeList.getLength(); ++j) {
-                    Node detailsNode = crawlerDetailsNodeList.item(i);
+                    Node detailsNode = crawlerDetailsNodeList.item(j);
                     crawler.details.put(detailsNode.getNodeName(), detailsNode.getTextContent());
                 }
                 crawlerDetails.add(crawler);
@@ -98,6 +98,7 @@ public class AppConfig {
                     Node detailsNode = productDetails.item(j);
                     product.details.put(detailsNode.getNodeName(), detailsNode.getTextContent());
                 }
+                trackedProducts.add(product);
 
             }
             logger.info("Configuration for " + PRODUCT_CONFIG_FILE + " read successfully");
