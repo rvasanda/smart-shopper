@@ -40,13 +40,12 @@ public class AppConfig {
 
     static {
         readXMLConfigFile();
-        //readPropertiesFile();
+        readPropertiesFile();
     }
 
     private AppConfig() { }
 
     public static void readXMLConfigFile() {
-        logger.debug("hrroh");
         InputStream stream = null;
 
         try {
@@ -70,8 +69,6 @@ public class AppConfig {
             String expression = "Configuration/Crawlers/Crawler";
             NodeList crawlerDetailsList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
 
-            // Read Crawler Details
-
             for (int i = 0; i < crawlerDetailsList.getLength(); ++i) {
                 Node node = crawlerDetailsList.item(i);
                 CrawlerDetails crawler = new CrawlerDetails();
@@ -83,7 +80,6 @@ public class AppConfig {
                 }
                 crawlerDetails.add(crawler);
             }
-
 
             // Read Tracked Products
 
@@ -125,13 +121,11 @@ public class AppConfig {
         }
     }
 
-    public static Properties readPropertiesFile(String filePath) {
+    public static void readPropertiesFile() {
         InputStream stream = null;
-        Properties properties = null;
         try {
-            stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
-            properties = new Properties();
-            properties.load(stream);
+            stream = new FileInputStream(APP_PROPERTIES_FILE);
+            appProperties.load(stream);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         } catch (NullPointerException e) {
@@ -146,14 +140,22 @@ public class AppConfig {
                 logger.error(e.getMessage(), e);
             }
         }
-        return properties;
     }
 
-    public Set<TrackedProduct> getProducts() {
+    public static Set<TrackedProduct> getProducts() {
         return trackedProducts;
     }
 
-    public Set<CrawlerDetails> getCrawlerDetails() {
+    public static Set<CrawlerDetails> getCrawlerDetails() {
         return crawlerDetails;
     }
+
+    public static Properties getAppProperties() {
+        return appProperties;
+    }
+
+    public static String getAppProperty(String key) {
+        return appProperties.getProperty(key);
+    }
+
 }

@@ -12,15 +12,8 @@ public final class CrawlerFactory {
 
     private static final Logger logger = LogManager.getLogger(CrawlerFactory.class);
 
-    public static enum Crawlers {
-        BESTBUY,
-        FUTURESHOP,
-        TIGERDIRECT,
-        NEWEGG,
-        NCIX
-    }
 
-    public static Crawler createCustomCrawler(Crawlers type) {
+    public static Crawler createCustomCrawler(CrawlerType type) {
         Crawler customCrawler = null;
 
         switch(type) {
