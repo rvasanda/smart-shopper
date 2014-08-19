@@ -18,8 +18,8 @@ public class CrawlerMain {
 
         List<Crawler> crawlers = new ArrayList<Crawler>();
 
-        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.BESTBUY));
-        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerFactory.Crawlers.FUTURESHOP));
+        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerType.BESTBUY));
+        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerType.FUTURESHOP));
 
         ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
         scheduledCrawlerService.runScheduledCrawler();

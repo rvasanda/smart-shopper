@@ -10,12 +10,6 @@ import org.jsoup.nodes.Element;
  */
 public class BestBuyCrawler extends Crawler {
 
-    private static final String CONFIG_FILE = ConfigConstants.CONFIG_FOLDER + "BestBuyConfig.xml";
-
-    public BestBuyCrawler() {
-        super(CONFIG_FILE);
-    }
-
     @Override
     protected boolean checkIfTargetPage(Document pageDoc, String query) {
         boolean isTargetPage = false;
