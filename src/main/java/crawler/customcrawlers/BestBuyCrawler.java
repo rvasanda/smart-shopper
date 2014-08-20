@@ -1,6 +1,5 @@
 package crawler.customcrawlers;
 
-import configuration.ConfigConstants;
 import crawler.Crawler;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +11,8 @@ import java.util.Map;
  */
 public class BestBuyCrawler extends Crawler {
 
-    public BestBuyCrawler(Map<String, String> productDetails) {
-        super(productDetails);
+    public BestBuyCrawler(Map<String, String> crawlerDetails) {
+        super(crawlerDetails);
     }
 
     @Override

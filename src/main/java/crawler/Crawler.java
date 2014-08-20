@@ -24,18 +24,18 @@ public abstract class Crawler {
 
     private String baseUrl = null;
     private String starterUrl = null;
-    protected Map<String,String> productDetails = null;
+    protected Map<String,String> crawlerDetails = null;
 
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
-    public Crawler(Map<String,String> productDetails) {
-        this.productDetails = productDetails;
+    public Crawler(Map<String,String> crawlerDetails) {
+        this.crawlerDetails = crawlerDetails;
         initialize();
     }
 
     private void initialize() {
 
-        if (connect(productDetails.get(ConfigConstants.BASE_URL)) == false) {
+        if (connect(crawlerDetails.get(ConfigConstants.BASE_URL)) == false) {
             logger.error("Quitting program because of unsuccessful connection...");
             System.exit(0);
         }
@@ -112,13 +112,13 @@ public abstract class Crawler {
                 logger.info("Connected to " + productUrl);
                 pageDoc.select("script, .hidden").remove();
 
-                Element productTitleElement = pageDoc.select(productDetails.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
+                Element productTitleElement = pageDoc.select(product.details.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
                 String productTitleText = productTitleElement.text();
                 logger.info("PRODUCT NAME: " + productTitleText);
                 product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);
 
-                Element productPriceElement  = pageDoc.select(productDetails.get(ConfigConstants.PRICE_WRAPPER).toString())
-                                                      .select(productDetails.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
+                Element productPriceElement  = pageDoc.select(product.details.get(ConfigConstants.PRICE_WRAPPER).toString())
+                                                      .select(product.details.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
 
                 Double productPrice = Double.parseDouble(productPriceElement.text().replace("$","").replace(",",""));
                 product.price = productPrice;

@@ -1,6 +1,5 @@
 package crawler.customcrawlers;
 
-import configuration.ConfigConstants;
 import crawler.Crawler;
 import org.jsoup.nodes.Document;
 
@@ -11,8 +10,8 @@ import java.util.Map;
  */
 public class FutureShopCrawler extends Crawler {
 
-    public FutureShopCrawler(Map<String, String> productDetails) {
-        super(productDetails);
+    public FutureShopCrawler(Map<String, String> crawlerDetails) {
+        super(crawlerDetails);
     }
 
     @Override
