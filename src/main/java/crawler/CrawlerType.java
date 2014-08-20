@@ -3,12 +3,8 @@ package crawler;
 /**
  * Created by Rohit on 2014-08-17.
  */
-public enum CrawlerType {
+public class CrawlerType {
 
-    BESTBUY,
-    FUTURESHOP,
-    TIGERDIRECT,
-    NEWEGG,
-    NCIX
-
+    public static final String BESTBUY = "bestbuy";
+    public static final String FUTURESHOP = "futureshop";
 }

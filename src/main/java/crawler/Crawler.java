@@ -25,15 +25,17 @@ public abstract class Crawler {
     private String baseUrl = null;
     private String starterUrl = null;
 
+    protected Map<String,String> productDetails = null;
+
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
-    public Crawler() {
-
+    public Crawler(Map<String,String> productDetails) {
+        this.productDetails = productDetails;
+        initialize();
     }
 
     private void initialize() {
-        baseUrl = AppConfig.
-        if (connect(baseUrl) == false) {
+        if (connect(productDetails.get(ConfigConstants.BASE_URL)) == false) {
             logger.error("Quitting program because of unsuccessful connection...");
             System.exit(0);
         }
@@ -110,13 +112,13 @@ public abstract class Crawler {
                 logger.info("Connected to " + productUrl);
                 pageDoc.select("script, .hidden").remove();
 
-                Element productTitleElement = pageDoc.select(.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
+                Element productTitleElement = pageDoc.select(productDetails.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
                 String productTitleText = productTitleElement.text();
                 logger.info("PRODUCT NAME: " + productTitleText);
                 product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);
 
-                Element productPriceElement  = pageDoc.select(configProperties.get(ConfigConstants.PRICE_WRAPPER).toString())
-                                                      .select(configProperties.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
+                Element productPriceElement  = pageDoc.select(productDetails.get(ConfigConstants.PRICE_WRAPPER).toString())
+                                                      .select(productDetails.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
 
                 Double productPrice = Double.parseDouble(productPriceElement.text().replace("$","").replace(",",""));
                 product.price = productPrice;

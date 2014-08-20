@@ -1,5 +1,7 @@
 package crawler;
 
+import configuration.AppConfig;
+import configuration.ConfigConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,11 +17,15 @@ public class CrawlerMain {
 
     public static void main(String[] args) {
         logger.info("Smart-Shopper starting...");
+        AppConfig.readXMLConfigFile();
+        AppConfig.readPropertiesFile();
 
         List<Crawler> crawlers = new ArrayList<Crawler>();
-
-        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerType.BESTBUY));
-        crawlers.add(CrawlerFactory.createCustomCrawler(CrawlerType.FUTURESHOP));
+        for (TrackedProduct product : AppConfig.getProducts()) {
+            String crawlerID = product.details.get(ConfigConstants.CRAWLER_ID_ATTRIBUTE);
+            Crawler newCrawler = CrawlerFactory.createCustomCrawler(crawlerID, product.details);
+            crawlers.add(newCrawler);
+        }
 
         ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
         scheduledCrawlerService.runScheduledCrawler();
