@@ -72,11 +72,11 @@ public class AppConfig {
             for (int i = 0; i < crawlerDetailsList.getLength(); ++i) {
                 Node node = crawlerDetailsList.item(i);
                 CrawlerDetails crawler = new CrawlerDetails();
-                crawler.details.put("id", ((Element)node).getAttribute("id"));
+                crawler.put("id", ((Element)node).getAttribute("id"));
                 NodeList crawlerDetailsNodeList = (NodeList) xPath.compile(childExpression).evaluate(node, XPathConstants.NODESET);
                 for (int j = 0; j < crawlerDetailsNodeList.getLength(); ++j) {
                     Node detailsNode = crawlerDetailsNodeList.item(j);
-                    crawler.details.put(detailsNode.getNodeName(), detailsNode.getTextContent());
+                    crawler.put(detailsNode.getNodeName(), detailsNode.getTextContent());
                 }
                 crawlerDetails.add(crawler);
             }

@@ -1,16 +1,15 @@
 package crawler.customcrawlers;
 
 import crawler.Crawler;
+import crawler.CrawlerDetails;
 import org.jsoup.nodes.Document;
-
-import java.util.Map;
 
 /**
  * Created by Rohit on 2014-08-02.
  */
 public class FutureShopCrawler extends Crawler {
 
-    public FutureShopCrawler(Map<String, String> crawlerDetails) {
+    public FutureShopCrawler(CrawlerDetails crawlerDetails) {
         super(crawlerDetails);
     }
 

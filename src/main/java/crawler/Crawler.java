@@ -8,12 +8,10 @@ import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Created by Rohit on 2014-07-28.
@@ -22,13 +20,11 @@ public abstract class Crawler {
 
     private static final Logger logger = LogManager.getLogger(Crawler.class);
 
-    private String baseUrl = null;
-    private String starterUrl = null;
-    protected Map<String,String> crawlerDetails = null;
+    protected CrawlerDetails crawlerDetails = null;
 
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
 
-    public Crawler(Map<String,String> crawlerDetails) {
+    public Crawler(CrawlerDetails crawlerDetails) {
         this.crawlerDetails = crawlerDetails;
         initialize();
     }
@@ -46,7 +42,7 @@ public abstract class Crawler {
     }
 
     private boolean connect(String url) {
-        logger.info("Testing connection to base url: " + baseUrl);
+        logger.info("Testing connection to base url: " + crawlerDetails.get(ConfigConstants.BASE_URL));
         try {
             Jsoup.connect(url).get();
         } catch(IOException e) {
@@ -63,41 +59,7 @@ public abstract class Crawler {
     }
 
     protected CrawlerData retrieveDataBruteForce(String query) {
-        Queue<String> linksQueue = new LinkedList<String>();
-
-        if (starterUrl != null) {
-            linksQueue.add(starterUrl);
-        } else {
-            linksQueue.add(baseUrl);
-        }
-        while (!linksQueue.isEmpty()) {
-            try {
-                Document pageDoc = Jsoup.connect(linksQueue.remove()).timeout(30000).get();
-
-                Elements allLinks = pageDoc.select("a[href]");
-                for (Element link : allLinks) {
-                    StringBuilder linkBuilder = new StringBuilder(baseUrl);
-                    linkBuilder.append(link.attr("href"));
-                    String linkString = linkBuilder.toString();
-                    if (!linksQueue.contains(linkString) && linkString.contains(baseUrl)) {
-                        linksQueue.add(linkString);
-                        if (checkIfTargetPage(pageDoc,query)) {
-                            CrawlerData cd = new CrawlerData();
-                            cd.somedata = "Found";
-                            return cd;
-                        }
-                    }
-                }
-                System.out.println("Queue Size: " + linksQueue.size());
-            } catch(IOException e) {
-                System.err.println("Could not retrieve data due to IOException: " + e.getMessage());
-                continue;
-            } catch (Exception e) {
-                System.err.println("Could not retrieve data due to Exception: " + e.getMessage());
-                continue;
-            }
-        }
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     protected void retrieveDataByProductUrls() {
@@ -144,7 +106,7 @@ public abstract class Crawler {
     }
 
     protected void setStarterUrl(String starterUrl) {
-        this.starterUrl = starterUrl;
+
     }
 
     public void crawl() {

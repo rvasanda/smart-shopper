@@ -22,8 +22,8 @@ public class CrawlerMain {
 
         List<Crawler> crawlers = new ArrayList<Crawler>();
         for (CrawlerDetails crawlerDetails : AppConfig.getCrawlerDetails()) {
-            String crawlerID = crawlerDetails.details.get(ConfigConstants.CRAWLER_ID_ATTRIBUTE);
-            Crawler newCrawler = CrawlerFactory.createCustomCrawler(crawlerID, crawlerDetails.details);
+            String crawlerID = crawlerDetails.get(ConfigConstants.CRAWLER_ID_ATTRIBUTE);
+            Crawler newCrawler = CrawlerFactory.createCustomCrawler(crawlerID, crawlerDetails);
             crawlers.add(newCrawler);
         }
 

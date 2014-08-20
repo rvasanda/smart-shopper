@@ -8,5 +8,13 @@ import java.util.Map;
  */
 public class CrawlerDetails {
 
-    public Map<String, String> details = new HashMap<String, String>();
+    private Map<String, String> details = new HashMap<String, String>();
+
+    public String get(String key) {
+        return details.get(key);
+    }
+
+    public void put(String key, String val) {
+        details.put(key, val);
+    }
 }

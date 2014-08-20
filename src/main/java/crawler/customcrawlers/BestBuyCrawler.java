@@ -1,17 +1,16 @@
 package crawler.customcrawlers;
 
 import crawler.Crawler;
+import crawler.CrawlerDetails;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-
-import java.util.Map;
 
 /**
  * Created by Rohit on 2014-07-28.
  */
 public class BestBuyCrawler extends Crawler {
 
-    public BestBuyCrawler(Map<String, String> crawlerDetails) {
+    public BestBuyCrawler(CrawlerDetails crawlerDetails) {
         super(crawlerDetails);
     }
 
