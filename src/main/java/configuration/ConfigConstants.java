@@ -20,7 +20,6 @@ public class ConfigConstants {
     public static final String EMAIL = "Email";
     public static final String NAME = "Name";
 
-
     public static final String CONFIG_FOLDER = System.getProperty("os.name").contains("OS X") ? "configuration/" : "configuration\\";
 
     private ConfigConstants() { }

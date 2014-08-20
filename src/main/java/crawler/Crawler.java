@@ -24,7 +24,6 @@ public abstract class Crawler {
 
     private String baseUrl = null;
     private String starterUrl = null;
-
     protected Map<String,String> productDetails = null;
 
     protected abstract boolean checkIfTargetPage(Document pageDoc, String query);
@@ -35,6 +34,7 @@ public abstract class Crawler {
     }
 
     private void initialize() {
+
         if (connect(productDetails.get(ConfigConstants.BASE_URL)) == false) {
             logger.error("Quitting program because of unsuccessful connection...");
             System.exit(0);

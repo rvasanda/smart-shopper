@@ -1,5 +1,6 @@
 package crawler.customcrawlers;
 
+import configuration.ConfigConstants;
 import crawler.Crawler;
 import org.jsoup.nodes.Document;
 
