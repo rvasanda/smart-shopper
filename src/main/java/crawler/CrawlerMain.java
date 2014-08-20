@@ -17,8 +17,6 @@ public class CrawlerMain {
 
     public static void main(String[] args) {
         logger.info("Smart-Shopper starting...");
-        AppConfig.readXMLConfigFile();
-        AppConfig.readPropertiesFile();
 
         List<Crawler> crawlers = new ArrayList<Crawler>();
         for (CrawlerDetails crawlerDetails : AppConfig.getCrawlerDetails()) {

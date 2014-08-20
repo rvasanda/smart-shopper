@@ -69,18 +69,21 @@ public abstract class Crawler {
 
         for (TrackedProduct product : AppConfig.getProducts()) {
             try {
+                if (!product.details.get(ConfigConstants.PRODUCT_URL).contains(crawlerDetails.get(ConfigConstants.BASE_URL))) {
+                    continue;
+                }
                 productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
                 Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
                 logger.info("Connected to " + productUrl);
                 pageDoc.select("script, .hidden").remove();
 
-                Element productTitleElement = pageDoc.select(product.details.get(ConfigConstants.PRODUCT_TITLE).toString()).first();
+                Element productTitleElement = pageDoc.select(crawlerDetails.get(ConfigConstants.PRODUCT_TITLE)).first();
                 String productTitleText = productTitleElement.text();
                 logger.info("PRODUCT NAME: " + productTitleText);
                 product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);
 
-                Element productPriceElement  = pageDoc.select(product.details.get(ConfigConstants.PRICE_WRAPPER).toString())
-                                                      .select(product.details.get(ConfigConstants.PRODUCT_PRICE).toString()).first();
+                Element productPriceElement  = pageDoc.select(crawlerDetails.get(ConfigConstants.PRICE_WRAPPER))
+                                                      .select(crawlerDetails.get(ConfigConstants.PRODUCT_PRICE)).first();
 
                 Double productPrice = Double.parseDouble(productPriceElement.text().replace("$","").replace(",",""));
                 product.price = productPrice;
@@ -124,10 +127,9 @@ public abstract class Crawler {
     private boolean checkProductInRange(TrackedProduct product) {
         boolean isInPriceRange = false;
 
-        Double min = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_PRICERANGE_MIN));
-        Double max = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_PRICERANGE_MAX));
+        Double max = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_MAXPRICE));
 
-        if (product.price <= max && product.price >= min) {
+        if (product.price <= max) {
             logger.info("Product " + product.details.get(ConfigConstants.PRODUCT_TITLE) + " is in the price range");
             isInPriceRange = true;
         }
