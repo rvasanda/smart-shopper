@@ -9,16 +9,16 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="crawler" level="debug">
+        <Logger name="crawler" level="info">
             <AppenderRef ref="FileLogger"/>
         </Logger>
-        <Logger name="model" level="debug">
+        <Logger name="model" level="info">
             <AppenderRef ref="FileLogger"/>
         </Logger>
-        <Logger name="mail" level="debug">
+        <Logger name="mail" level="info">
             <AppenderRef ref="FileLogger"/>
         </Logger>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="STDOUT"/>
         </Root>
     </Loggers>
