@@ -97,7 +97,7 @@ public class AppConfig {
                 }
                 trackedProducts.add(product);
             }
-            logger.info("Configuration for " + PRODUCT_CONFIG_FILE + " read successfully");
+            logger.debug("Configuration for " + PRODUCT_CONFIG_FILE + " read successfully");
         } catch (FileNotFoundException e) {
             logger.error(e.getMessage(), e);
         } catch (SAXException e) {
