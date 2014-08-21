@@ -2,6 +2,8 @@ package crawler;
 
 import configuration.AppConfig;
 import configuration.ConfigConstants;
+import crawler.crawlerfactory.CrawlerFactory;
+import crawler.scheduler.ScheduledCrawlerService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

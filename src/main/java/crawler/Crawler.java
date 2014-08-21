@@ -2,15 +2,13 @@ package crawler;
 
 import configuration.AppConfig;
 import configuration.ConfigConstants;
-import mail.GoogleMail;
+import mail.MailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import java.io.IOException;
 
 /**
@@ -119,7 +117,7 @@ public abstract class Crawler {
         for (TrackedProduct product : AppConfig.getProducts()) {
             if (checkProductInRange(product)) {
                 // Send Email
-                sendMail(product);
+                MailSender.sendMail(product);
             }
         }
     }
@@ -135,36 +133,5 @@ public abstract class Crawler {
         }
 
         return isInPriceRange;
-    }
-
-    private void sendMail(TrackedProduct product) {
-        //TODO: consider aggregating results
-
-        String title = new StringBuilder().append("ON SALE! ")
-                .append(product.details.get(ConfigConstants.PRODUCT_TITLE)).toString();
-
-        String message = new StringBuilder().append(AppConfig.getProperty(ConfigConstants.NAME))
-                .append(", we have great news! \n\nThe ")
-                .append(product.details.get(ConfigConstants.PRODUCT_TITLE))
-                .append(" is on sale now for $")
-                .append(product.price)
-                .append(" at ")
-                .append(product.details.get(ConfigConstants.PRODUCT_URL))
-                .append(". Go buy it bitch!")
-                .append("\n\nKind regards, \n")
-                .append("Smart Shopper")
-                .toString();
-
-        try {
-            GoogleMail.Send(AppConfig.getProperty(ConfigConstants.USERNAME),
-                    AppConfig.getProperty(ConfigConstants.PASSWORD), AppConfig.getProperty(ConfigConstants.EMAIL), title, message);
-            logger.info("Sending mail to:  " + AppConfig.getProperty((ConfigConstants.EMAIL)) + " for product " + product.details.get(ConfigConstants.PRODUCT_TITLE));
-        } catch (AddressException e) {
-            logger.error(e.getMessage(), e);
-        } catch (MessagingException e) {
-            logger.error(e.getMessage(), e);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
     }
 }

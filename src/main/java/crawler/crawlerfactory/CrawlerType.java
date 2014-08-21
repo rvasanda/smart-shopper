@@ -1,4 +1,4 @@
-package crawler;
+package crawler.crawlerfactory;
 
 /**
  * Created by Rohit on 2014-08-17.
