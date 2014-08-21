@@ -14,9 +14,8 @@ public class Utility {
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
-    public static int parseCrawlInterval(String interval) {
+    public static int parseCrawlInterval(String intervalString) {
         int intervalInMinutes = -1;
-        String intervalString = "1h 30m";
         int hours = 0;
         int minutes = -1;
 
