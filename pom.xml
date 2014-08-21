@@ -11,7 +11,7 @@
     <properties>
         <jarName>Smart-Shopper</jarName>
         <base.dir>smart-shopper</base.dir>
-        <config.dir>config</config.dir>
+        <config.dir>configuration</config.dir>
     </properties>
 
     <build>
@@ -47,7 +47,7 @@
                             <mainClass>crawler.CrawlerMain</mainClass>
                         </manifest>
                         <manifestEntries>
-                            <Class-Path>config/</Class-Path>
+                            <Class-Path>configuration/</Class-Path>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -76,9 +76,9 @@
                                     </includes>
                                 </resource>
                                 <resource>
-                                    <description>Copy config folder to ${base.dir}</description>
+                                    <description>Copy configuration folder to ${base.dir}</description>
                                     <targetPath>target/${base.dir}/${config.dir}</targetPath>
-                                    <directory>config</directory>
+                                    <directory>configuration</directory>
                                 </resource>
                             </resources>
                         </configuration>

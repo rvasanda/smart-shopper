@@ -1,7 +1,7 @@
 package crawler.customcrawlers;
 
-import config.ConfigConstants;
-import crawler.Crawler;
+import crawler.model.Crawler;
+import crawler.model.CrawlerDetails;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -10,10 +10,8 @@ import org.jsoup.nodes.Element;
  */
 public class BestBuyCrawler extends Crawler {
 
-    private static final String CONFIG_FILE = ConfigConstants.CONFIG_FOLDER + "BestBuyConfig.xml";
-
-    public BestBuyCrawler() {
-        super(CONFIG_FILE);
+    public BestBuyCrawler(CrawlerDetails crawlerDetails) {
+        super(crawlerDetails);
     }
 
     @Override

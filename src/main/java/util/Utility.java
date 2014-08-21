@@ -1,10 +1,7 @@
 package util;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Properties;
 
 /**
  * Created by Rohit on 2014-07-30.
@@ -17,5 +14,19 @@ public class Utility {
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
+    public static int parseCrawlInterval(String intervalString) {
+        int intervalInMinutes = -1;
+        int hours = 0;
+        int minutes = -1;
 
+        if (intervalString.indexOf("h") != -1) {
+            hours = Integer.parseInt(intervalString.substring(0, intervalString.indexOf("h")));
+            minutes = Integer.parseInt(intervalString.substring(intervalString.indexOf("h") + 2, intervalString.indexOf("m")));
+            intervalInMinutes = hours * 60 + minutes;
+        } else if (intervalString.indexOf("m") != -1) {
+            minutes = Integer.parseInt(intervalString.substring(0, intervalString.indexOf("m")));
+            intervalInMinutes = minutes;
+        }
+        return intervalInMinutes;
+    }
 }

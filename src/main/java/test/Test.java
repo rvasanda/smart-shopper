@@ -1,5 +1,6 @@
 package test;
 
+import configuration.AppConfig;
 import mail.GoogleMail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,7 +18,10 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created by Rohit on 2014-08-02.
@@ -28,8 +32,10 @@ public class Test {
         //testBruteForce();
         //testMail();
         //testConfigReader();
-        testConfigReader2();
-        testConfigReader2();
+        //testConfigReader2();
+        //testConfigReader2();
+        //testAppConfigReader();
+        testCrawlIntervalParsing();
     }
 
     private static void testBruteForce() {
@@ -65,7 +71,7 @@ public class Test {
             //FileInputStream file = new FileInputStream(new File("c:/employees.xml"));
 
             //THIS WORKS
-            BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config/BestBuyConfig.xml"));
+            BufferedInputStream stream = new BufferedInputStream(new FileInputStream("configuration/BestBuyConfig.xml"));
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 
@@ -158,6 +164,28 @@ public class Test {
     }
 
     private static void testConfigReader2() {
-        ConfigurationReader.readXMLConfigFile("config/BestBuyConfig.xml");
+        ConfigurationReader.readXMLConfigFile("configuration/BestBuyConfig.xml");
     }
+
+    private static void testAppConfigReader() {
+        AppConfig.getCrawlerDetails();
+    }
+
+    private static void testCrawlIntervalParsing() {
+        int intervalInMinutes = -1;
+        String intervalString = "30m";
+        int hours = 0;
+        int minutes = -1;
+
+        if (intervalString.indexOf("h") != -1) {
+            hours = Integer.parseInt(intervalString.substring(0, intervalString.indexOf("h")));
+            minutes = Integer.parseInt(intervalString.substring(intervalString.indexOf("h") + 2, intervalString.indexOf("m")));
+            intervalInMinutes = hours * 60 + minutes;
+        } else if (intervalString.indexOf("m") != -1) {
+            minutes = Integer.parseInt(intervalString.substring(0, intervalString.indexOf("m")));
+            intervalInMinutes = minutes;
+        }
+        System.out.println(intervalInMinutes);
+    }
+
 }

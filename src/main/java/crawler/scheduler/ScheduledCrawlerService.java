@@ -1,7 +1,11 @@
-package crawler;
+package crawler.scheduler;
 
+import configuration.AppConfig;
+import configuration.ConfigConstants;
+import crawler.model.Crawler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import util.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +21,27 @@ public class ScheduledCrawlerService {
     private static final Logger logger = LogManager.getLogger(ScheduledCrawlerService.class);
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final int crawlInterval = Utility.parseCrawlInterval(AppConfig.getProperty(ConfigConstants.CRAWL_INTERVAL));
     private List<Crawler> crawlers = new ArrayList<Crawler>();
 
     public ScheduledCrawlerService(List<Crawler> crawlers) {
         logger.info("Initializing Scheduled Crawler Service");
         this.crawlers = crawlers;
+
     }
 
     public void runScheduledCrawler() {
 
         final Runnable runCrawler = new Runnable() {
             public void run() {
+                logger.info("Crawler Service is running now");
                 for (Crawler c : crawlers) {
                     c.crawl();
-                    c.updateConfigurations();
                 }
+                AppConfig.readXMLConfigFile();
             }
         };
-        scheduler.scheduleAtFixedRate(runCrawler, 0, 2, TimeUnit.MINUTES);
-        logger.info("Crawler Service scheduled to run every 2 minutes");
+        scheduler.scheduleAtFixedRate(runCrawler, 0, crawlInterval, TimeUnit.MINUTES);
+        logger.info("Crawler Service scheduled to run every " + crawlInterval + " minutes");
     }
 }

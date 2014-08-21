@@ -1,7 +1,7 @@
 package crawler.customcrawlers;
 
-import config.ConfigConstants;
-import crawler.Crawler;
+import crawler.model.Crawler;
+import crawler.model.CrawlerDetails;
 import org.jsoup.nodes.Document;
 
 /**
@@ -9,10 +9,8 @@ import org.jsoup.nodes.Document;
  */
 public class FutureShopCrawler extends Crawler {
 
-    private static final String CONFIG_FILE = ConfigConstants.CONFIG_FOLDER + "FutureShopConfig.xml";
-
-    public FutureShopCrawler() {
-        super(CONFIG_FILE);
+    public FutureShopCrawler(CrawlerDetails crawlerDetails) {
+        super(crawlerDetails);
     }
 
     @Override
