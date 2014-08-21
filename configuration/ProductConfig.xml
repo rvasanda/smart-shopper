@@ -29,7 +29,13 @@
         <Product>
             <Name>PlayStation 4 Console</Name>
             <ProductURL>http://www.futureshop.ca/en-CA/product/playstation-4-playstation-4-console-10036/10254140.aspx</ProductURL>
-            <MaxPrice>400</MaxPrice>
+            <MaxPrice>450</MaxPrice>
         </Product>
+        <Product>
+            <Name>UN55H7150AFXZC</Name>
+            <ProductURL>http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx</ProductURL>
+            <MaxPrice>1700</MaxPrice>
+        </Product>
+
     </TrackedProducts>
 </Configuration>
