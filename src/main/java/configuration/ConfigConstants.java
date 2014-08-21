@@ -17,6 +17,7 @@ public class ConfigConstants {
     public static final String PASSWORD = "Password";
     public static final String EMAIL = "Email";
     public static final String NAME = "Name";
+    public static final String CRAWL_INTERVAL = "CrawlInterval";
 
     public static final String CONFIG_FOLDER = System.getProperty("os.name").contains("OS X") ? "configuration/" : "configuration\\";
 

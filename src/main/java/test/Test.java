@@ -34,7 +34,8 @@ public class Test {
         //testConfigReader();
         //testConfigReader2();
         //testConfigReader2();
-        testAppConfigReader();
+        //testAppConfigReader();
+        testCrawlIntervalParsing();
     }
 
     private static void testBruteForce() {
@@ -169,4 +170,22 @@ public class Test {
     private static void testAppConfigReader() {
         AppConfig.getCrawlerDetails();
     }
+
+    private static void testCrawlIntervalParsing() {
+        int intervalInMinutes = -1;
+        String intervalString = "30m";
+        int hours = 0;
+        int minutes = -1;
+
+        if (intervalString.indexOf("h") != -1) {
+            hours = Integer.parseInt(intervalString.substring(0, intervalString.indexOf("h")));
+            minutes = Integer.parseInt(intervalString.substring(intervalString.indexOf("h") + 2, intervalString.indexOf("m")));
+            intervalInMinutes = hours * 60 + minutes;
+        } else if (intervalString.indexOf("m") != -1) {
+            minutes = Integer.parseInt(intervalString.substring(0, intervalString.indexOf("m")));
+            intervalInMinutes = minutes;
+        }
+        System.out.println(intervalInMinutes);
+    }
+
 }
