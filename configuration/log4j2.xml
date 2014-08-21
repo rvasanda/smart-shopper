@@ -9,7 +9,10 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="crawler" level="trace">
+        <Logger name="crawler" level="info">
+            <AppenderRef ref="FileLogger"/>
+        </Logger>
+        <Logger name="model" level="info">
             <AppenderRef ref="FileLogger"/>
         </Logger>
         <Root level="info">

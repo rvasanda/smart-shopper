@@ -28,7 +28,7 @@ public class CrawlerMain {
             String crawlerID = crawlerDetails.get(ConfigConstants.CRAWLER_ID_ATTRIBUTE);
             Crawler newCrawler = CrawlerFactory.createCustomCrawler(crawlerID, crawlerDetails);
             crawlers.add(newCrawler);
-            logger.info("----" + crawlerID);
+            logger.info(crawlerID);
         }
 
         ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
