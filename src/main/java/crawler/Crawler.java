@@ -67,7 +67,7 @@ public abstract class Crawler {
 
         for (TrackedProduct product : AppConfig.getProducts()) {
             try {
-                if (!product.details.get(ConfigConstants.PRODUCT_URL).contains(crawlerDetails.get(ConfigConstants.BASE_URL))) {
+                if (!product.details.get(ConfigConstants.PRODUCT_URL).startsWith(crawlerDetails.get(ConfigConstants.BASE_URL))) {
                     continue;
                 }
                 productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
