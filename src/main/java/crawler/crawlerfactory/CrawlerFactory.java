@@ -26,7 +26,7 @@ public final class CrawlerFactory {
             throw new UnsupportedOperationException(crawlerType + " Crawler not currently supported!");
         }
 
-        logger.info("Initalizing " + crawlerType + " Crawler");
+        logger.debug("Initalizing " + crawlerType + " Crawler");
         return customCrawler;
     }
 }

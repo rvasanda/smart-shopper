@@ -37,7 +37,7 @@ public class MailSender {
         try {
             GoogleMail.Send(AppConfig.getProperty(ConfigConstants.USERNAME),
                     AppConfig.getProperty(ConfigConstants.PASSWORD), AppConfig.getProperty(ConfigConstants.EMAIL), title, message);
-            logger.info("Sending mail to:  " + AppConfig.getProperty((ConfigConstants.EMAIL)) + " for product " + product.details.get(ConfigConstants.PRODUCT_TITLE));
+            logger.debug("Sending mail to:  " + AppConfig.getProperty((ConfigConstants.EMAIL)) + " for product " + product.details.get(ConfigConstants.PRODUCT_TITLE));
         } catch (AddressException e) {
             logger.error(e.getMessage(), e);
         } catch (MessagingException e) {

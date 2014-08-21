@@ -41,7 +41,7 @@ public abstract class Crawler {
     }
 
     private boolean connect(String url) {
-        logger.info("Testing connection to base url: " + crawlerDetails.get(ConfigConstants.BASE_URL));
+        logger.debug("Testing connection to base url: " + crawlerDetails.get(ConfigConstants.BASE_URL));
         try {
             Jsoup.connect(url).get();
         } catch(IOException e) {
@@ -53,7 +53,7 @@ public abstract class Crawler {
             logger.error(e.getMessage(), e);
             return false;
         }
-        logger.info("Connection successful");
+        logger.debug("Connection successful");
         return true;
     }
 
@@ -62,7 +62,7 @@ public abstract class Crawler {
     }
 
     protected void retrieveDataByProductUrls() {
-        logger.info("Retrieving data from product urls");
+        logger.debug("Retrieving data from product urls");
 
         String productUrl = null;
 
@@ -73,12 +73,11 @@ public abstract class Crawler {
                 }
                 productUrl = product.details.get(ConfigConstants.PRODUCT_URL);
                 Document pageDoc = Jsoup.connect(productUrl).timeout(30000).get();
-                logger.info("Connected to " + productUrl);
+                logger.debug("Connected to " + productUrl);
                 pageDoc.select("script, .hidden").remove();
 
                 Element productTitleElement = pageDoc.select(crawlerDetails.get(ConfigConstants.PRODUCT_TITLE)).first();
                 String productTitleText = productTitleElement.text();
-                logger.info("PRODUCT NAME: " + productTitleText);
                 product.details.put(ConfigConstants.PRODUCT_TITLE, productTitleText);
 
                 Element productPriceElement  = pageDoc.select(crawlerDetails.get(ConfigConstants.PRICE_WRAPPER))
@@ -86,7 +85,7 @@ public abstract class Crawler {
 
                 Double productPrice = Double.parseDouble(productPriceElement.text().replace("$","").replace(",",""));
                 product.price = productPrice;
-                logger.info("Product price: " + productPriceElement.text());
+                logger.info("Product:  " + productTitleText + "\tPrice: " + productPriceElement.text());
             } catch(IOException e) {
                 logger.error("Connection to url failed: " + productUrl);
                 logger.error(e.getMessage(), e);
@@ -129,7 +128,7 @@ public abstract class Crawler {
         Double max = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_MAXPRICE));
 
         if (product.price <= max) {
-            logger.info("Product " + product.details.get(ConfigConstants.PRODUCT_TITLE) + " is in the price range");
+            logger.debug("Product " + product.details.get(ConfigConstants.PRODUCT_TITLE) + " is in the price range");
             isInPriceRange = true;
         }
 

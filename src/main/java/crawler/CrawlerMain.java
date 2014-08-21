@@ -23,10 +23,12 @@ public class CrawlerMain {
         logger.info("Smart-Shopper starting...");
 
         List<Crawler> crawlers = new ArrayList<Crawler>();
+        logger.info("Available Crawlers: ");
         for (CrawlerDetails crawlerDetails : AppConfig.getCrawlerDetails()) {
             String crawlerID = crawlerDetails.get(ConfigConstants.CRAWLER_ID_ATTRIBUTE);
             Crawler newCrawler = CrawlerFactory.createCustomCrawler(crawlerID, crawlerDetails);
             crawlers.add(newCrawler);
+            logger.info("----" + crawlerID);
         }
 
         ScheduledCrawlerService scheduledCrawlerService = new ScheduledCrawlerService(crawlers);
