@@ -1,7 +1,7 @@
 package crawler.customcrawlers;
 
-import crawler.Crawler;
-import crawler.CrawlerDetails;
+import crawler.model.Crawler;
+import crawler.model.CrawlerDetails;
 import org.jsoup.nodes.Document;
 
 /**

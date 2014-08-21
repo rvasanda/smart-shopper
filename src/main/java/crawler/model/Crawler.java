@@ -1,7 +1,8 @@
-package crawler;
+package crawler.model;
 
 import configuration.AppConfig;
 import configuration.ConfigConstants;
+import crawler.CrawlerData;
 import mail.MailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

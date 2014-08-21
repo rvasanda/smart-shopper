@@ -1,6 +1,6 @@
 package crawler.scheduler;
 
-import crawler.Crawler;
+import crawler.model.Crawler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

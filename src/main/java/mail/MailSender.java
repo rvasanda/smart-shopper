@@ -2,7 +2,7 @@ package mail;
 
 import configuration.AppConfig;
 import configuration.ConfigConstants;
-import crawler.TrackedProduct;
+import crawler.model.TrackedProduct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

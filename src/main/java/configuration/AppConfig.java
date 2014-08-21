@@ -4,8 +4,8 @@ package configuration;
  * Created by Rohit on 2014-08-01.
  */
 
-import crawler.CrawlerDetails;
-import crawler.TrackedProduct;
+import crawler.model.CrawlerDetails;
+import crawler.model.TrackedProduct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;

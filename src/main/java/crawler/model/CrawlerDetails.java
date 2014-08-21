@@ -1,4 +1,4 @@
-package crawler;
+package crawler.model;
 
 import java.util.HashMap;
 import java.util.Map;

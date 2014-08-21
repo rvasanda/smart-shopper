@@ -1,7 +1,7 @@
 package crawler.crawlerfactory;
 
-import crawler.Crawler;
-import crawler.CrawlerDetails;
+import crawler.model.Crawler;
+import crawler.model.CrawlerDetails;
 import crawler.customcrawlers.BestBuyCrawler;
 import crawler.customcrawlers.FutureShopCrawler;
 import org.apache.logging.log4j.LogManager;
