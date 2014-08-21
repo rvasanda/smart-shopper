@@ -36,10 +36,6 @@ public abstract class Crawler {
         }
     }
 
-    public void updateConfigurations() {
-        AppConfig.readXMLConfigFile();
-    }
-
     private boolean connect(String url) {
         logger.debug("Testing connection to base url: " + crawlerDetails.get(ConfigConstants.BASE_URL));
         try {
@@ -125,13 +121,22 @@ public abstract class Crawler {
     private boolean checkProductInRange(TrackedProduct product) {
         boolean isInPriceRange = false;
 
-        Double max = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_MAXPRICE));
-
-        if (product.price <= max) {
-            logger.debug("Product " + product.details.get(ConfigConstants.PRODUCT_TITLE) + " is in the price range");
-            isInPriceRange = true;
+        if (product.price == null) {
+            return isInPriceRange;
         }
 
+        try {
+            Double max = Double.parseDouble(product.details.get(ConfigConstants.PRODUCT_MAXPRICE));
+
+            if (product.price <= max) {
+                logger.debug("Product " + product.details.get(ConfigConstants.PRODUCT_TITLE) + " is in the price range");
+                isInPriceRange = true;
+            }
+        } catch (NumberFormatException e) {
+            logger.error(e.getMessage(), e);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         return isInPriceRange;
     }
 }

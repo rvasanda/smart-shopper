@@ -34,10 +34,11 @@ public class ScheduledCrawlerService {
 
         final Runnable runCrawler = new Runnable() {
             public void run() {
+                logger.info("Crawler Service is running now");
                 for (Crawler c : crawlers) {
                     c.crawl();
-                    c.updateConfigurations();
                 }
+                AppConfig.readXMLConfigFile();
             }
         };
         scheduler.scheduleAtFixedRate(runCrawler, 0, crawlInterval, TimeUnit.MINUTES);

@@ -10,5 +10,6 @@ public class TrackedProduct {
 
     public Map<String, String> details = new HashMap<String, String>();
     public Double price = null;
+    public boolean mailSent = false;
 
 }
