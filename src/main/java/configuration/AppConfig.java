@@ -55,8 +55,12 @@ public class AppConfig {
                 File updatedFile = new File(PRODUCT_CONFIG_FILE);
                 if (configFile.lastModified() != updatedFile.lastModified()) {
                     configFile = updatedFile;
+                } else {
+                    return;
                 }
             }
+            trackedProducts.clear();
+            crawlerDetails.clear();
             stream = new FileInputStream(configFile);
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder =  builderFactory.newDocumentBuilder();
