@@ -37,6 +37,7 @@ public class AppConfig {
     private static Set<CrawlerDetails> crawlerDetails = new HashSet<CrawlerDetails>();
     private static Properties appProperties = new Properties();
     private static File configFile = null;
+    private static long lastModified = -1L;
 
     static {
         readXMLConfigFile();
@@ -51,12 +52,12 @@ public class AppConfig {
         try {
             if (configFile == null) {
                 configFile = new File(PRODUCT_CONFIG_FILE);
+                lastModified = configFile.lastModified();
             } else {
-                File updatedFile = new File(PRODUCT_CONFIG_FILE);
-                if (configFile.lastModified() != updatedFile.lastModified()) {
-                    configFile = updatedFile;
-                } else {
+                if (lastModified == configFile.lastModified()) {
                     return;
+                } else {
+                    lastModified = configFile.lastModified();
                 }
             }
             trackedProducts.clear();

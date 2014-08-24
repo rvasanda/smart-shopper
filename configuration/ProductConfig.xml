@@ -36,6 +36,11 @@
             <ProductURL>http://www.bestbuy.ca/en-CA/product/samsung-samsung-55-1080p-240hz-3d-led-smart-tv-un55h7150afxzc-un55h7150afxzc/10290946.aspx</ProductURL>
             <MaxPrice>1700</MaxPrice>
         </Product>
+        <Product>
+            <Name>home theatre</Name>
+            <ProductURL>http://www.bestbuy.ca/en-CA/product/bose-cinemate-gs-series-ii-digital-home-theatre-speaker-system/10131326.aspx</ProductURL>
+            <MaxPrice>400</MaxPrice>
+        </Product>
 
     </TrackedProducts>
 </Configuration>
